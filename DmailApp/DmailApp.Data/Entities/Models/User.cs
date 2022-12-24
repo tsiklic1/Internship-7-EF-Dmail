@@ -16,5 +16,8 @@ namespace DmailApp.Data.Entities.Models
             Adress = adress;
             Password = password;
         }
+        //1 to many with mail (user can send multiple mails)
+        public ICollection<Mail> SentMails { get; } = new List<Mail>();
+
     }
 }

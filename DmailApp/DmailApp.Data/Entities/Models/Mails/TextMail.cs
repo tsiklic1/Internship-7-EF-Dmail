@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DmailApp.Data.Entities.Models
+namespace DmailApp.Data.Entities.Models.Mails
 {
     public class TextMail : Mail
     {
-        public string Content { get; set; } 
+        public string Content { get; set; }
         public TextMail(string title, string content) : base(title)
         {
             Content = content;
