@@ -5,6 +5,10 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DmailApp.Presentation", "DmailApp.Presentation\DmailApp.Presentation.csproj", "{32F62938-A067-4870-8002-F374C833A999}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DmailApp.Domain", "DmailApp.Domain\DmailApp.Domain.csproj", "{89AC4B51-7789-423C-8570-3EBE5EA6AFAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DmailApp.Data", "DmailApp.Data\DmailApp.Data.csproj", "{9E3C5E00-5C24-4A18-9300-7EAA1E3F72A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{32F62938-A067-4870-8002-F374C833A999}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32F62938-A067-4870-8002-F374C833A999}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32F62938-A067-4870-8002-F374C833A999}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89AC4B51-7789-423C-8570-3EBE5EA6AFAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89AC4B51-7789-423C-8570-3EBE5EA6AFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89AC4B51-7789-423C-8570-3EBE5EA6AFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89AC4B51-7789-423C-8570-3EBE5EA6AFAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E3C5E00-5C24-4A18-9300-7EAA1E3F72A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E3C5E00-5C24-4A18-9300-7EAA1E3F72A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E3C5E00-5C24-4A18-9300-7EAA1E3F72A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E3C5E00-5C24-4A18-9300-7EAA1E3F72A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
