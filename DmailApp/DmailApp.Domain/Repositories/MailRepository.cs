@@ -48,8 +48,6 @@ namespace DmailApp.Domain.Repositories
             mailToUpdate.DateTimeOfSending = mail.DateTimeOfSending;
             mailToUpdate.WasRead= mail.WasRead;
             mailToUpdate.SenderId= mail.SenderId;
-            mailToUpdate.Sender = mail.Sender;
-
             return SaveChanges();
         }
     }
