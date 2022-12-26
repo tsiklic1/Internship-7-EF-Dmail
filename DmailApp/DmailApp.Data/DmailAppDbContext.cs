@@ -9,12 +9,12 @@ namespace DmailApp.Data
     public class DmailAppDbContext : DbContext
     {
         public DmailAppDbContext(DbContextOptions options) : base(options) { }
-        public DbSet<User> User => Set<User>();
-        public DbSet<Mail> Mail => Set<Mail>();
+        public DbSet<User> Users => Set<User>();
+        public DbSet<Mail> Mails => Set<Mail>();
 
-        public DbSet<TextMail> TextMail => Set<TextMail>();
+        public DbSet<TextMail> TextMails => Set<TextMail>();
 
-        public DbSet<EventMail> EventMail => Set<EventMail>();
+        public DbSet<EventMail> EventMails => Set<EventMail>();
 
         public DbSet<ReceiversMails> ReceiversMails => Set<ReceiversMails>();
         public DbSet<UsersSpams> UsersSpams => Set<UsersSpams>();
@@ -51,6 +51,12 @@ namespace DmailApp.Data
                 .HasOne(m => m.Sender)
                 .WithMany(s => s.SentMails)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Mail>()
+            .HasDiscriminator<string>("mail_type")
+            .HasValue<Mail>("mail")
+            .HasValue<TextMail>("textmail")
+            .HasValue<EventMail>("eventmail");
 
             base.OnModelCreating(modelBuilder);
 
