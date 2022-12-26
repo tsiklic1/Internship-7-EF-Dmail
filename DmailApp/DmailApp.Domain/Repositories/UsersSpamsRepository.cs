@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DmailApp.Domain.Repositories
 {
-    internal class UsersSpamsRepository : BaseRepository
+    public class UsersSpamsRepository : BaseRepository
     {
         public UsersSpamsRepository(DmailAppDbContext dbContext) : base(dbContext)
         {

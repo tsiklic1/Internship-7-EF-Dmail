@@ -1,5 +1,6 @@
 ﻿using DmailApp.Data.Entities.Models;
 using DmailApp.Data.Entities.Models.Mails;
+using DmailApp.Data.Seeds;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -27,12 +28,12 @@ namespace DmailApp.Data
             modelBuilder.Entity<ReceiversMails>()
                 .HasOne(r => r.SentMail)
                 .WithMany(m => m.ReceiversMails)
-                .HasForeignKey(rm => rm.ReceiverId);
+                .HasForeignKey(rm => rm.MailId);
 
             modelBuilder.Entity<ReceiversMails>()
                 .HasOne(m => m.Receiver)
                 .WithMany(m => m.ReceiversMails)
-                .HasForeignKey(rm => rm.MailId);
+                .HasForeignKey(rm => rm.ReceiverId);
 
             modelBuilder.Entity<UsersSpams>()
                 .HasKey(us => new { us.UserId, us.SpamId });
@@ -58,6 +59,7 @@ namespace DmailApp.Data
             .HasValue<TextMail>("textmail")
             .HasValue<EventMail>("eventmail");
 
+            DatabaseSeeder.Seed(modelBuilder);
             base.OnModelCreating(modelBuilder);
 
         }
