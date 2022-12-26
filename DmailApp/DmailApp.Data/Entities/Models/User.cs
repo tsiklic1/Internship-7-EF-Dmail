@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DmailApp.Data.Entities.Models.Mails;
 
 namespace DmailApp.Data.Entities.Models
 {
@@ -16,8 +17,18 @@ namespace DmailApp.Data.Entities.Models
             Adress = adress;
             Password = password;
         }
-        //1 to many with mail (user can send multiple mails)
+        //1 to many with mails (user can send multiple mails)
         public ICollection<Mail> SentMails { get; } = new List<Mail>();
+
+        //many to many with mails (user can receive multiple mails and a mail can be sent to multiple users)
+        public ICollection<ReceiversMails> ReceiversMails { get; set; } = new List<ReceiversMails>();
+
+        public ICollection<UsersSpams> UsersSpamsUser { get; set; } = new List<UsersSpams>();
+        public ICollection<UsersSpams> UsersSpamsSpam { get; set; } = new List<UsersSpams>();
+
+
+
+
 
     }
 }
