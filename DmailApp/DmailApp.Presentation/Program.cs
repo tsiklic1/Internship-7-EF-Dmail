@@ -1,6 +1,8 @@
 ﻿using DmailApp.Domain.Factories;
 using DmailApp.Domain.Repositories;
 using DmailApp.Presentation.Enums;
+using DmailApp.Presentation.Extensions;
+using DmailApp.Presentation.Factories;
 using System.Text;
 
 int choice = -1;
@@ -33,14 +35,13 @@ while (choice != (int)ChoiceEnum.Exit)
 void Login()
 {
 	Console.WriteLine("\nEmail adress:");
-	var adress = Console.ReadLine();
+	string adress = Console.ReadLine();
 	Console.WriteLine("\nPassword");
-	var password = Console.ReadLine();
+	string password = Console.ReadLine();
 	var userRepo = RepositoryFactory.Create<UserRepository>();
-	Console.WriteLine(userRepo.CheckIfAdressPasswordCombinationExists(adress, password));
 	while (!userRepo.CheckIfAdressPasswordCombinationExists(adress, password))
 	{
-		Console.WriteLine("Ne postoji");
+		Console.WriteLine("Incorrect adress-password combination");
         Console.WriteLine("\nEmail adress:");
         adress = Console.ReadLine();
         Console.WriteLine("\nPassword");
@@ -48,7 +49,8 @@ void Login()
 
     }
 	//ovde smo se dobro loginali i cila logika triba krenit od vamo
-	Console.WriteLine("postoji");
+	var mainMenuActions = MainMenuFactory.CreateActions(adress);
+	mainMenuActions.PrintActionsAndOpen();
 }
 
 void Register()

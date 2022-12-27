@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DmailApp.Presentation.Enums
+namespace DmailApp.Presentation.Factories
 {
-    public enum ChoiceEnum
+    public class OutgoingMailActionsFactory
     {
-        Login = 1,
-        Registration,
-        Exit
     }
 }

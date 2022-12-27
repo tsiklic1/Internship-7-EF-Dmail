@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace DmailApp.Presentation.Enums
 {
-    public enum ChoiceEnum
+    public enum IncomingMailActionEnum
     {
-        Login = 1,
-        Registration,
+        DetailedView = 1,
+        Filter,
         Exit
     }
 }

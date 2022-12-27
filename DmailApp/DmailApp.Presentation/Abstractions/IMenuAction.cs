@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DmailApp.Presentation.Enums
+namespace DmailApp.Presentation.Abstractions
 {
-    public enum ChoiceEnum
+    public interface IMenuAction : IAction
     {
-        Login = 1,
-        Registration,
-        Exit
+        IList<IAction> Actions { get; set; }
     }
 }

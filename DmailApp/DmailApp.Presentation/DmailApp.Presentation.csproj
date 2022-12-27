@@ -18,4 +18,9 @@
     <ProjectReference Include="..\DmailApp.Domain\DmailApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Actions\OutgoingMailActions\" />
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>
