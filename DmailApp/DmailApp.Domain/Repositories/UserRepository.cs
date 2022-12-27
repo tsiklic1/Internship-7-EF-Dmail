@@ -1,6 +1,7 @@
 ﻿using DmailApp.Data;
 using DmailApp.Data.Entities.Models;
 using DmailApp.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +53,31 @@ namespace DmailApp.Domain.Repositories
         public User? GetById(int id) => DbContext.Users.FirstOrDefault(u => u.UserId == id);
 
         public ICollection<User> GetAll() => DbContext.Users.ToList();
+
+        public bool CheckIfAdressPasswordCombinationExists(string adress, string password)
+        {
+            var users = DbContext.Users
+                .Select(u => new User(u.Adress, u.Password))
+                .ToList();
+
+            if (!users.Any(u => u.Adress == adress && u.Password == password))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckIfAdressIsUnique(string adress)
+        {
+            var usersAdresses = DbContext.Users
+                .Select(u => u.Adress) 
+                .ToList();
+            if (usersAdresses.Contains(adress))
+            {
+                return false;
+            }
+            return true;
+        }
 
 
     }

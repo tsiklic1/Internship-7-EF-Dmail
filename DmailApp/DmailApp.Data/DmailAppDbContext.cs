@@ -41,17 +41,17 @@ namespace DmailApp.Data
             modelBuilder.Entity<UsersSpams>()
                 .HasOne(u => u.User)
                 .WithMany(s => s.UsersSpamsSpam)
-                .HasForeignKey(us => us.SpamId);
+                .HasForeignKey(us => us.UserId);
 
             modelBuilder.Entity<UsersSpams>()
                 .HasOne(s => s.Spam)
                 .WithMany(s => s.UsersSpamsUser)
-                .HasForeignKey(us => us.UserId);
+                .HasForeignKey(us => us.SpamId);
 
             modelBuilder.Entity<Mail>()
                 .HasOne(m => m.Sender)
                 .WithMany(s => s.SentMails)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Mail>()
             .HasDiscriminator<string>("mail_type")
