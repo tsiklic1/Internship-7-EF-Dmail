@@ -1,5 +1,6 @@
 ﻿using DmailApp.Data;
 using DmailApp.Data.Entities.Models;
+using DmailApp.Data.Enums;
 using DmailApp.Domain.Enums;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,22 @@ namespace DmailApp.Domain.Repositories
             DbContext.ReceiversMails.Remove(receiverMailToDelete);
 
             return SaveChanges();
+        }
+
+        public StautsEnum? GetStatusByCompositeKey(int mailId, int receiverId)
+        {
+            var receiverMail = DbContext.ReceiversMails
+                .Where(x => x.MailId == mailId && x.ReceiverId == receiverId)
+                .FirstOrDefault();
+
+            if (!(receiverMail is ReceiversEventMails))
+            {
+                return null;
+            }
+
+            var receiverEventMail = (ReceiversEventMails)receiverMail;
+            var status = receiverEventMail.Status;
+            return status;
         }
     }
 }

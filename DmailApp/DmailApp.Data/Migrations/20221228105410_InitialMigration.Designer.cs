@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DmailApp.Data.Migrations
 {
     [DbContext(typeof(DmailAppDbContext))]
-    [Migration("20221228104444_AddingInitialSeed")]
-    partial class AddingInitialSeed
+    [Migration("20221228105410_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

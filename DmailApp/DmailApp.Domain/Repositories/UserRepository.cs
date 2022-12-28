@@ -79,6 +79,16 @@ namespace DmailApp.Domain.Repositories
             return true;
         }
 
+        public int GetIdByAdress(string adress)
+        {
+            var user = DbContext.Users
+                .Where(u => u.Adress == adress)
+                .FirstOrDefault();
+            var id = user!.UserId;
+            return id;
+            
+        }
+
 
     }
 }

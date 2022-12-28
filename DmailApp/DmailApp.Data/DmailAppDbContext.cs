@@ -19,6 +19,7 @@ namespace DmailApp.Data
 
         public DbSet<ReceiversMails> ReceiversMails => Set<ReceiversMails>();
         public DbSet<UsersSpams> UsersSpams => Set<UsersSpams>();
+        public DbSet<ReceiversEventMails> ReceiversEventMails=> Set<ReceiversEventMails>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

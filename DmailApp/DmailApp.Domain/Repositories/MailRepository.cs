@@ -131,7 +131,6 @@ namespace DmailApp.Domain.Repositories
             return mailToShow;
         }
 
-
         //public Mail ShowMailById(int idOfChosenMail)
         //{
         //    var mailToShow = DbContext.Mails

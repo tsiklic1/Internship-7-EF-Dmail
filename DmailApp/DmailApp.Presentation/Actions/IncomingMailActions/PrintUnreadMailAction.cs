@@ -1,9 +1,11 @@
 ﻿using DmailApp.Data.Entities.Models.Mails;
+using DmailApp.Domain.Models;
 using DmailApp.Domain.Repositories;
 using DmailApp.Presentation.Abstractions;
 using DmailApp.Presentation.Enums;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,38 +53,55 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
                 switch (choice)
                 {
                     case (int)IncomingMailActionEnum.DetailedView:
-                        Console.WriteLine("Mail serial number:");
-                        var isValidNumber = int.TryParse(Console.ReadLine(), out var mailNum);
-                        if (!isValidNumber)
-                        {
-                            Console.WriteLine("Please insert number");
-                        }
-                        //otic u MailRepository -> vidit je li textmail ili eventmail, printat accordingly
-                        int idOfChosenMail = mails[mailNum - 1].Id;
-                        var mailToShow = _mailRepository.ShowMailById(idOfChosenMail);
-                        if (mailToShow == null)
-                        {
-                            Console.WriteLine("Wrong id input");
-                        }
-                        if (mailToShow is TextMail)
-                        {
-                            Console.WriteLine("textMail");
-                            var textMailToShow = (TextMail)mailToShow;
-                            Console.WriteLine($"{textMailToShow.Title}\n{textMailToShow.DateTimeOfSending}\n{textMailToShow.Sender.Adress}\n{textMailToShow.Content}");
-                        }
+                        DetailedViev(mails);
+                        //Console.WriteLine("Mail serial number:");
+                        //var isValidNumber = int.TryParse(Console.ReadLine(), out var mailNum);
+                        //if (!isValidNumber)
+                        //{
+                        //    Console.WriteLine("Please insert number");
+                        //    continue;
+                        //}
+                        //if (mailNum > mails.Count() || mailNum < 1)
+                        //{
+                        //    Console.WriteLine("No mail with that id");
+                        //    continue;
+                        //}
+                        //int idOfChosenMail = mails[mailNum - 1].Id;
+                        //var mailToShow = _mailRepository.ShowMailById(idOfChosenMail);
+                        //if (mailToShow == null)
+                        //{
+                        //    Console.WriteLine("Wrong id input");
+                        //    continue;
+                        //}
+                        //mailToShow.WasRead = true;
 
-                        else if (mailToShow is EventMail)
-                        {
-                            string joinedAdresses = "";
-                            Console.WriteLine("eventMail");
-                            var eventMailToShow = (EventMail)mailToShow;
-                            Console.WriteLine($"{eventMailToShow.Title}\n{eventMailToShow.EventTime}\n{eventMailToShow.Sender.Adress}");
-                            foreach (var item in eventMailToShow.ReceiversMails)
-                            {
-                                joinedAdresses+= item.Receiver.Adress + " ";
-                            }
-                            Console.WriteLine(joinedAdresses);
-                        }
+                        //if (mailToShow is TextMail)
+                        //{
+                        //    Console.WriteLine("textMail");
+                        //    var textMailToShow = (TextMail)mailToShow;
+                        //    Console.WriteLine($"{textMailToShow.Title}\n{textMailToShow.DateTimeOfSending}\n{textMailToShow.Sender.Adress}\n{textMailToShow.Content}");
+                        //}
+
+                        //else if (mailToShow is EventMail)
+                        //{
+                        //    string joinedAdresses = "";
+                        //    Console.WriteLine("eventMail");
+                        //    var eventMailToShow = (EventMail)mailToShow;
+                        //    Console.WriteLine($"{eventMailToShow.Title}\n{eventMailToShow.EventTime}\n{eventMailToShow.Sender.Adress}");
+                        //    foreach (var item in eventMailToShow.ReceiversMails)
+                        //    {
+                        //        joinedAdresses+= item.Receiver.Adress + " ";
+                        //    }
+                        //    Console.WriteLine(joinedAdresses);
+                        //    var idOfLoggedInUser = _userRepository.GetIdByAdress(Adress);
+                        //    var status = _receiversMailsRepository.GetStatusByCompositeKey(idOfChosenMail, idOfLoggedInUser);
+                        //    Console.WriteLine(status);
+                        //}
+                        //_mailRepository.Update(mailToShow, idOfChosenMail);
+
+                        //sad se ovdi triba otvorit izbornik za 4 akcije
+
+
                         break;
                     case (int)IncomingMailActionEnum.Filter: 
                         break;
@@ -94,6 +113,56 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
                         break;
                 }
             }
+        }
+
+        public void DetailedViev(List<MailTitleWithSenderAdress> mails)
+        {
+            Console.WriteLine("Mail serial number:");
+            var isValidNumber = int.TryParse(Console.ReadLine(), out var mailNum);
+            if (!isValidNumber)
+            {
+                Console.WriteLine("Please insert number");
+                return;
+            }
+            if (mailNum > mails.Count() || mailNum < 1)
+            {
+                Console.WriteLine("No mail with that id");
+                return;
+            }
+            int idOfChosenMail = mails[mailNum - 1].Id;
+            var mailToShow = _mailRepository.ShowMailById(idOfChosenMail);
+            if (mailToShow == null)
+            {
+                Console.WriteLine("Wrong id input");
+                return;
+            }
+            mailToShow.WasRead = true;
+
+            if (mailToShow is TextMail)
+            {
+                Console.WriteLine("textMail");
+                var textMailToShow = (TextMail)mailToShow;
+                Console.WriteLine($"{textMailToShow.Title}\n{textMailToShow.DateTimeOfSending}\n{textMailToShow.Sender.Adress}\n{textMailToShow.Content}");
+            }
+
+            else if (mailToShow is EventMail)
+            {
+                string joinedAdresses = "";
+                Console.WriteLine("eventMail");
+                var eventMailToShow = (EventMail)mailToShow;
+                Console.WriteLine($"{eventMailToShow.Title}\n{eventMailToShow.EventTime}\n{eventMailToShow.Sender.Adress}");
+                foreach (var item in eventMailToShow.ReceiversMails)
+                {
+                    joinedAdresses += item.Receiver.Adress + " ";
+                }
+                Console.WriteLine(joinedAdresses);
+                var idOfLoggedInUser = _userRepository.GetIdByAdress(Adress);
+                var status = _receiversMailsRepository.GetStatusByCompositeKey(idOfChosenMail, idOfLoggedInUser);
+                Console.WriteLine(status);
+            }
+            _mailRepository.Update(mailToShow, idOfChosenMail);
+
+            //sad se ovdi triba otvorit izbornik za 4 akcije
         }
     }
 }
