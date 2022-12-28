@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DmailApp.Data.Migrations
 {
     [DbContext(typeof(DmailAppDbContext))]
-    [Migration("20221226202013_RemappingUsersSpams")]
-    partial class RemappingUsersSpams
+    [Migration("20221228104444_AddingInitialSeed")]
+    partial class AddingInitialSeed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,11 +66,17 @@ namespace DmailApp.Data.Migrations
                     b.Property<int>("MailId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("mail_type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("ReceiverId", "MailId");
 
                     b.HasIndex("MailId");
 
                     b.ToTable("ReceiversMails");
+
+                    b.HasDiscriminator<string>("mail_type").HasValue("textmail");
 
                     b.HasData(
                         new
@@ -102,36 +108,6 @@ namespace DmailApp.Data.Migrations
                         {
                             ReceiverId = 3,
                             MailId = 5
-                        },
-                        new
-                        {
-                            ReceiverId = 2,
-                            MailId = 6
-                        },
-                        new
-                        {
-                            ReceiverId = 5,
-                            MailId = 7
-                        },
-                        new
-                        {
-                            ReceiverId = 4,
-                            MailId = 8
-                        },
-                        new
-                        {
-                            ReceiverId = 1,
-                            MailId = 9
-                        },
-                        new
-                        {
-                            ReceiverId = 2,
-                            MailId = 9
-                        },
-                        new
-                        {
-                            ReceiverId = 5,
-                            MailId = 9
                         });
                 });
 
@@ -326,12 +302,60 @@ namespace DmailApp.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("DmailApp.Data.Entities.Models.ReceiversEventMails", b =>
+                {
+                    b.HasBaseType("DmailApp.Data.Entities.Models.ReceiversMails");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasDiscriminator().HasValue("eventmail");
+
+                    b.HasData(
+                        new
+                        {
+                            ReceiverId = 2,
+                            MailId = 6,
+                            Status = 2
+                        },
+                        new
+                        {
+                            ReceiverId = 5,
+                            MailId = 7,
+                            Status = 2
+                        },
+                        new
+                        {
+                            ReceiverId = 4,
+                            MailId = 8,
+                            Status = 0
+                        },
+                        new
+                        {
+                            ReceiverId = 1,
+                            MailId = 9,
+                            Status = 1
+                        },
+                        new
+                        {
+                            ReceiverId = 2,
+                            MailId = 9,
+                            Status = 2
+                        },
+                        new
+                        {
+                            ReceiverId = 5,
+                            MailId = 9,
+                            Status = 2
+                        });
+                });
+
             modelBuilder.Entity("DmailApp.Data.Entities.Models.Mails.Mail", b =>
                 {
                     b.HasOne("DmailApp.Data.Entities.Models.User", "Sender")
                         .WithMany("SentMails")
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Sender");

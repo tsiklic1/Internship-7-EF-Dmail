@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DmailApp.Data.Migrations
 {
     [DbContext(typeof(DmailAppDbContext))]
-    [Migration("20221226094222_TPH_mail")]
-    partial class TPH_mail
+    [Migration("20221228103825_InitailMigration")]
+    partial class InitailMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,7 +53,7 @@ namespace DmailApp.Data.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Mail");
+                    b.ToTable("Mails");
 
                     b.HasDiscriminator<string>("mail_type").HasValue("mail");
                 });
@@ -66,11 +66,17 @@ namespace DmailApp.Data.Migrations
                     b.Property<int>("MailId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("mail_type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("ReceiverId", "MailId");
 
                     b.HasIndex("MailId");
 
                     b.ToTable("ReceiversMails");
+
+                    b.HasDiscriminator<string>("mail_type").HasValue("textmail");
                 });
 
             modelBuilder.Entity("DmailApp.Data.Entities.Models.User", b =>
@@ -91,7 +97,7 @@ namespace DmailApp.Data.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DmailApp.Data.Entities.Models.UsersSpams", b =>
@@ -130,12 +136,22 @@ namespace DmailApp.Data.Migrations
                     b.HasDiscriminator().HasValue("textmail");
                 });
 
+            modelBuilder.Entity("DmailApp.Data.Entities.Models.ReceiversEventMails", b =>
+                {
+                    b.HasBaseType("DmailApp.Data.Entities.Models.ReceiversMails");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasDiscriminator().HasValue("eventmail");
+                });
+
             modelBuilder.Entity("DmailApp.Data.Entities.Models.Mails.Mail", b =>
                 {
                     b.HasOne("DmailApp.Data.Entities.Models.User", "Sender")
                         .WithMany("SentMails")
                         .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Sender");
@@ -143,13 +159,13 @@ namespace DmailApp.Data.Migrations
 
             modelBuilder.Entity("DmailApp.Data.Entities.Models.ReceiversMails", b =>
                 {
-                    b.HasOne("DmailApp.Data.Entities.Models.User", "Receiver")
+                    b.HasOne("DmailApp.Data.Entities.Models.Mails.Mail", "SentMail")
                         .WithMany("ReceiversMails")
                         .HasForeignKey("MailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DmailApp.Data.Entities.Models.Mails.Mail", "SentMail")
+                    b.HasOne("DmailApp.Data.Entities.Models.User", "Receiver")
                         .WithMany("ReceiversMails")
                         .HasForeignKey("ReceiverId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -162,14 +178,14 @@ namespace DmailApp.Data.Migrations
 
             modelBuilder.Entity("DmailApp.Data.Entities.Models.UsersSpams", b =>
                 {
-                    b.HasOne("DmailApp.Data.Entities.Models.User", "User")
-                        .WithMany("UsersSpamsSpam")
+                    b.HasOne("DmailApp.Data.Entities.Models.User", "Spam")
+                        .WithMany("UsersSpamsUser")
                         .HasForeignKey("SpamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DmailApp.Data.Entities.Models.User", "Spam")
-                        .WithMany("UsersSpamsUser")
+                    b.HasOne("DmailApp.Data.Entities.Models.User", "User")
+                        .WithMany("UsersSpamsSpam")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

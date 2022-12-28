@@ -9,57 +9,6 @@ namespace DmailApp.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Mail_User_SenderId",
-                table: "Mail");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_ReceiversMails_Mail_ReceiverId",
-                table: "ReceiversMails");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_ReceiversMails_User_MailId",
-                table: "ReceiversMails");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_UsersSpams_User_SpamId",
-                table: "UsersSpams");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_UsersSpams_User_UserId",
-                table: "UsersSpams");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_User",
-                table: "User");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Mail",
-                table: "Mail");
-
-            migrationBuilder.RenameTable(
-                name: "User",
-                newName: "Users");
-
-            migrationBuilder.RenameTable(
-                name: "Mail",
-                newName: "Mails");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Mail_SenderId",
-                table: "Mails",
-                newName: "IX_Mails_SenderId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Users",
-                table: "Users",
-                column: "UserId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Mails",
-                table: "Mails",
-                column: "Id");
-
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Adress", "Password" },
@@ -107,117 +56,37 @@ namespace DmailApp.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "ReceiversMails",
-                columns: new[] { "MailId", "ReceiverId" },
+                columns: new[] { "MailId", "ReceiverId", "Status", "mail_type" },
                 values: new object[,]
                 {
-                    { 2, 1 },
-                    { 3, 1 },
-                    { 9, 1 },
-                    { 1, 2 },
-                    { 4, 2 },
-                    { 6, 2 },
-                    { 9, 2 },
-                    { 1, 3 },
-                    { 5, 3 },
-                    { 8, 4 },
-                    { 7, 5 },
-                    { 9, 5 }
+                    { 9, 1, 1, "eventmail" },
+                    { 6, 2, 2, "eventmail" },
+                    { 9, 2, 2, "eventmail" },
+                    { 8, 4, 0, "eventmail" },
+                    { 7, 5, 2, "eventmail" },
+                    { 9, 5, 2, "eventmail" }
                 });
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Mails_Users_SenderId",
-                table: "Mails",
-                column: "SenderId",
-                principalTable: "Users",
-                principalColumn: "UserId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ReceiversMails_Mails_MailId",
+            migrationBuilder.InsertData(
                 table: "ReceiversMails",
-                column: "MailId",
-                principalTable: "Mails",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ReceiversMails_Users_ReceiverId",
-                table: "ReceiversMails",
-                column: "ReceiverId",
-                principalTable: "Users",
-                principalColumn: "UserId",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_UsersSpams_Users_SpamId",
-                table: "UsersSpams",
-                column: "SpamId",
-                principalTable: "Users",
-                principalColumn: "UserId",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_UsersSpams_Users_UserId",
-                table: "UsersSpams",
-                column: "UserId",
-                principalTable: "Users",
-                principalColumn: "UserId",
-                onDelete: ReferentialAction.Cascade);
+                columns: new[] { "MailId", "ReceiverId", "mail_type" },
+                values: new object[,]
+                {
+                    { 2, 1, "textmail" },
+                    { 3, 1, "textmail" },
+                    { 1, 2, "textmail" },
+                    { 4, 2, "textmail" },
+                    { 1, 3, "textmail" },
+                    { 5, 3, "textmail" }
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Mails_Users_SenderId",
-                table: "Mails");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_ReceiversMails_Mails_MailId",
-                table: "ReceiversMails");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_ReceiversMails_Users_ReceiverId",
-                table: "ReceiversMails");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_UsersSpams_Users_SpamId",
-                table: "UsersSpams");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_UsersSpams_Users_UserId",
-                table: "UsersSpams");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Users",
-                table: "Users");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Mails",
-                table: "Mails");
-
-            migrationBuilder.DeleteData(
-                table: "ReceiversMails",
-                keyColumns: new[] { "MailId", "ReceiverId" },
-                keyValues: new object[] { 2, 1 });
-
-            migrationBuilder.DeleteData(
-                table: "ReceiversMails",
-                keyColumns: new[] { "MailId", "ReceiverId" },
-                keyValues: new object[] { 3, 1 });
-
             migrationBuilder.DeleteData(
                 table: "ReceiversMails",
                 keyColumns: new[] { "MailId", "ReceiverId" },
                 keyValues: new object[] { 9, 1 });
-
-            migrationBuilder.DeleteData(
-                table: "ReceiversMails",
-                keyColumns: new[] { "MailId", "ReceiverId" },
-                keyValues: new object[] { 1, 2 });
-
-            migrationBuilder.DeleteData(
-                table: "ReceiversMails",
-                keyColumns: new[] { "MailId", "ReceiverId" },
-                keyValues: new object[] { 4, 2 });
 
             migrationBuilder.DeleteData(
                 table: "ReceiversMails",
@@ -228,16 +97,6 @@ namespace DmailApp.Data.Migrations
                 table: "ReceiversMails",
                 keyColumns: new[] { "MailId", "ReceiverId" },
                 keyValues: new object[] { 9, 2 });
-
-            migrationBuilder.DeleteData(
-                table: "ReceiversMails",
-                keyColumns: new[] { "MailId", "ReceiverId" },
-                keyValues: new object[] { 1, 3 });
-
-            migrationBuilder.DeleteData(
-                table: "ReceiversMails",
-                keyColumns: new[] { "MailId", "ReceiverId" },
-                keyValues: new object[] { 5, 3 });
 
             migrationBuilder.DeleteData(
                 table: "ReceiversMails",
@@ -253,6 +112,36 @@ namespace DmailApp.Data.Migrations
                 table: "ReceiversMails",
                 keyColumns: new[] { "MailId", "ReceiverId" },
                 keyValues: new object[] { 9, 5 });
+
+            migrationBuilder.DeleteData(
+                table: "ReceiversMails",
+                keyColumns: new[] { "MailId", "ReceiverId" },
+                keyValues: new object[] { 2, 1 });
+
+            migrationBuilder.DeleteData(
+                table: "ReceiversMails",
+                keyColumns: new[] { "MailId", "ReceiverId" },
+                keyValues: new object[] { 3, 1 });
+
+            migrationBuilder.DeleteData(
+                table: "ReceiversMails",
+                keyColumns: new[] { "MailId", "ReceiverId" },
+                keyValues: new object[] { 1, 2 });
+
+            migrationBuilder.DeleteData(
+                table: "ReceiversMails",
+                keyColumns: new[] { "MailId", "ReceiverId" },
+                keyValues: new object[] { 4, 2 });
+
+            migrationBuilder.DeleteData(
+                table: "ReceiversMails",
+                keyColumns: new[] { "MailId", "ReceiverId" },
+                keyValues: new object[] { 1, 3 });
+
+            migrationBuilder.DeleteData(
+                table: "ReceiversMails",
+                keyColumns: new[] { "MailId", "ReceiverId" },
+                keyValues: new object[] { 5, 3 });
 
             migrationBuilder.DeleteData(
                 table: "UsersSpams",
@@ -338,68 +227,6 @@ namespace DmailApp.Data.Migrations
                 table: "Users",
                 keyColumn: "UserId",
                 keyValue: 4);
-
-            migrationBuilder.RenameTable(
-                name: "Users",
-                newName: "User");
-
-            migrationBuilder.RenameTable(
-                name: "Mails",
-                newName: "Mail");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_Mails_SenderId",
-                table: "Mail",
-                newName: "IX_Mail_SenderId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_User",
-                table: "User",
-                column: "UserId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Mail",
-                table: "Mail",
-                column: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Mail_User_SenderId",
-                table: "Mail",
-                column: "SenderId",
-                principalTable: "User",
-                principalColumn: "UserId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ReceiversMails_Mail_ReceiverId",
-                table: "ReceiversMails",
-                column: "ReceiverId",
-                principalTable: "Mail",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ReceiversMails_User_MailId",
-                table: "ReceiversMails",
-                column: "MailId",
-                principalTable: "User",
-                principalColumn: "UserId",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_UsersSpams_User_SpamId",
-                table: "UsersSpams",
-                column: "SpamId",
-                principalTable: "User",
-                principalColumn: "UserId",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_UsersSpams_User_UserId",
-                table: "UsersSpams",
-                column: "UserId",
-                principalTable: "User",
-                principalColumn: "UserId",
-                onDelete: ReferentialAction.Cascade);
         }
     }
 }

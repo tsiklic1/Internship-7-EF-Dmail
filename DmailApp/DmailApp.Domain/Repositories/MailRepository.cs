@@ -120,9 +120,26 @@ namespace DmailApp.Domain.Repositories
                 
         }
 
-        //public void ShowMail(int mailNum)
-        //{
+        public Mail ShowMailById(int idOfChosenMail)
+        {
+            var mailToShow = DbContext.Mails
+                .Include(m => m.Sender)
+                .Include(m => m.ReceiversMails)
+                .Where(x => x.Id == idOfChosenMail)
+                .FirstOrDefault();
 
+            return mailToShow;
+        }
+
+
+        //public Mail ShowMailById(int idOfChosenMail)
+        //{
+        //    var mailToShow = DbContext.Mails
+        //        .Include(m => m.Sender)
+        //        .Where(x => x.Id == idOfChosenMail)
+        //        .FirstOrDefault();
+
+        //    return mailToShow;
         //}
 
     }

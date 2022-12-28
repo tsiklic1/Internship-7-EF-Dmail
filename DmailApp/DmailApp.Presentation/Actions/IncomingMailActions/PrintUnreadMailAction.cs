@@ -1,4 +1,5 @@
-﻿using DmailApp.Domain.Repositories;
+﻿using DmailApp.Data.Entities.Models.Mails;
+using DmailApp.Domain.Repositories;
 using DmailApp.Presentation.Abstractions;
 using DmailApp.Presentation.Enums;
 using System;
@@ -54,13 +55,36 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
                         var isValidNumber = int.TryParse(Console.ReadLine(), out var mailNum);
                         if (!isValidNumber)
                         {
-                            Console.WriteLine("Please inser number");
+                            Console.WriteLine("Please insert number");
                         }
-                        Console.WriteLine(mails[0]);
                         //otic u MailRepository -> vidit je li textmail ili eventmail, printat accordingly
+                        int idOfChosenMail = mails[mailNum - 1].Id;
+                        var mailToShow = _mailRepository.ShowMailById(idOfChosenMail);
+                        if (mailToShow == null)
+                        {
+                            Console.WriteLine("Wrong id input");
+                        }
+                        if (mailToShow is TextMail)
+                        {
+                            Console.WriteLine("textMail");
+                            var textMailToShow = (TextMail)mailToShow;
+                            Console.WriteLine($"{textMailToShow.Title}\n{textMailToShow.DateTimeOfSending}\n{textMailToShow.Sender.Adress}\n{textMailToShow.Content}");
+                        }
 
+                        else if (mailToShow is EventMail)
+                        {
+                            string joinedAdresses = "";
+                            Console.WriteLine("eventMail");
+                            var eventMailToShow = (EventMail)mailToShow;
+                            Console.WriteLine($"{eventMailToShow.Title}\n{eventMailToShow.EventTime}\n{eventMailToShow.Sender.Adress}");
+                            foreach (var item in eventMailToShow.ReceiversMails)
+                            {
+                                joinedAdresses+= item.Receiver.Adress + " ";
+                            }
+                            Console.WriteLine(joinedAdresses);
+                        }
                         break;
-                    case (int)IncomingMailActionEnum.Filter:
+                    case (int)IncomingMailActionEnum.Filter: 
                         break;
                     case (int)IncomingMailActionEnum.Exit:
                         Console.WriteLine("Exit");

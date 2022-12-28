@@ -1,5 +1,6 @@
 ﻿using DmailApp.Data.Entities.Models;
 using DmailApp.Data.Entities.Models.Mails;
+using DmailApp.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -166,36 +167,47 @@ namespace DmailApp.Data.Seeds
                     {
                         ReceiverId = 3,
                         MailId= 5
-                    },
-                    new ReceiversMails()
+                    }
+                });
+            builder.Entity<ReceiversEventMails>()
+                .HasData(new List<ReceiversEventMails>
+                {
+                    new ReceiversEventMails()
                     {
                         ReceiverId = 2,
-                        MailId= 6
+                        MailId= 6,
+                        Status = StautsEnum.NoAnswer
                     },
-                    new ReceiversMails()
+                    new ReceiversEventMails()
                     {
                         ReceiverId = 5,
-                        MailId= 7
+                        MailId= 7,
+                        Status = StautsEnum.NoAnswer
+
                     },
-                    new ReceiversMails()
+                    new ReceiversEventMails()
                     {
                         ReceiverId = 4,
-                        MailId= 8
+                        MailId= 8,
+                        Status = StautsEnum.Accepted
                     },
-                    new ReceiversMails()
+                    new ReceiversEventMails()
                     {
                         ReceiverId = 1,
-                        MailId= 9
+                        MailId= 9,
+                        Status = StautsEnum.Declined
                     },
-                    new ReceiversMails()
+                    new ReceiversEventMails()
                     {
                         ReceiverId = 2,
-                        MailId= 9
+                        MailId= 9,
+                        Status = StautsEnum.NoAnswer
                     },
-                    new ReceiversMails()
+                    new ReceiversEventMails()
                     {
                         ReceiverId = 5,
-                        MailId= 9
+                        MailId= 9,
+                        Status = StautsEnum.NoAnswer
                     }
                 });
         

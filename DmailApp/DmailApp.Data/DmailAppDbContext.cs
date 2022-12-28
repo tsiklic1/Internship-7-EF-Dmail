@@ -59,6 +59,11 @@ namespace DmailApp.Data
             .HasValue<TextMail>("textmail")
             .HasValue<EventMail>("eventmail");
 
+            modelBuilder.Entity<ReceiversMails>()
+                .HasDiscriminator<string>("mail_type")
+                .HasValue<ReceiversMails>("textmail")
+                .HasValue<ReceiversEventMails>("eventmail");
+
             DatabaseSeeder.Seed(modelBuilder);
             base.OnModelCreating(modelBuilder);
 
