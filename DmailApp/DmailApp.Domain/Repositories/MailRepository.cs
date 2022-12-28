@@ -75,6 +75,33 @@ namespace DmailApp.Domain.Repositories
             return titlesWithSenders;
         }
 
+        //public List<MailTitleWithSenderAdress> GetReadSpamMails(string adress)
+        //{
+        //    //var mails = DbContext.Mails
+        //    //    .Include(m => m.ReceiversMails)
+        //    //    .ThenInclude(rm => rm.Receiver)
+        //    //    .ThenInclude(r => r.UsersSpamsSpam)
+        //    //    .Where(m => m.WasRead)                
+        //    //    .Select(m => new MailTitleWithSenderAdress
+        //    //    {
+        //    //        Id = m.Id,
+        //    //        Title = m.Title,
+        //    //        SenderAdress = m.Sender.Adress,
+        //    //        Receivers = m.ReceiversMails
+        //    //                .Select(u => u.Receiver)
+        //    //                .ToList()
+
+        //    //    })
+        //    //    .Where(r => r.Receivers.Any(g => g.Adress == adress))
+        //    //    .ToList();
+
+        //    var mails = DbContext.UsersSpams
+
+        //    return mails;
+
+
+        //}
+
         public List<MailTitleWithSenderAdress> GetUnreadMails(string adress)
         {
             var titlesWithSenders = DbContext.Mails
@@ -131,15 +158,28 @@ namespace DmailApp.Domain.Repositories
             return mailToShow;
         }
 
-        //public Mail ShowMailById(int idOfChosenMail)
-        //{
-        //    var mailToShow = DbContext.Mails
-        //        .Include(m => m.Sender)
-        //        .Where(x => x.Id == idOfChosenMail)
-        //        .FirstOrDefault();
+        public List<MailTitleWithSenderAdress> GetOutgoingMails(string adress)
+        {
+            var titlesWithReceivers = DbContext.Mails
+                .Include(m => m.ReceiversMails)
+                .ThenInclude(r => r.Receiver)
+                .Where(m => m.Sender.Adress == adress)
+                .OrderBy(m => m.DateTimeOfSending)
+                .Select(m => new MailTitleWithSenderAdress
+                {
+                    Id = m.Id,
+                    Title = m.Title,
+                    SenderAdress = m.Sender.Adress,
+                    Receivers = m.ReceiversMails
+                        .Select(u => u.Receiver)
+                        .ToList()
+                })
+                .ToList();
+            return titlesWithReceivers;
 
-        //    return mailToShow;
-        //}
+        }
+
+        
 
     }
 }

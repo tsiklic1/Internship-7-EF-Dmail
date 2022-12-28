@@ -34,5 +34,14 @@ namespace DmailApp.Domain.Repositories
 
             return SaveChanges();
         }
+
+        public List<UsersSpams> GetSpamAccounts(string adress)
+        {
+            var spamAccounts = DbContext.UsersSpams
+                .Where(u => u.User.Adress == adress)
+                .ToList();
+
+            return spamAccounts;
+        }
     }
 }

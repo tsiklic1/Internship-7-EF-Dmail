@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace DmailApp.Domain.Repositories
 {
@@ -85,10 +86,10 @@ namespace DmailApp.Domain.Repositories
                 .Where(u => u.Adress == adress)
                 .FirstOrDefault();
             var id = user!.UserId;
-            return id;
-            
+            return id;            
         }
 
+        
 
     }
 }

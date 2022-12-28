@@ -1,17 +1,59 @@
 ﻿using DmailApp.Data.Entities.Models.Mails;
 using DmailApp.Domain.Models;
 using DmailApp.Domain.Repositories;
+using DmailApp.Presentation.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DmailApp.Presentation.Helpers
+namespace DmailApp.Presentation.Actions.OutgoingMailActions
 {
-    public static class DetailedViewHelper
+    public class PrintOutgoingMailAction : IAction
     {
-        public static void DetailedView(List<MailTitleWithSenderAdress> mails, MailRepository mailRepository, UserRepository userRepository, ReceiversMailsRepository _receiversMailsRepository, string adress)
+        private readonly UserRepository _userRepository;
+        private readonly ReceiversMailsRepository _receiversMailsRepository;
+        private readonly MailRepository _mailRepository;
+
+        public int MenuIndex { get; set; }
+        public string Name { get; set; } = "Print Outgoing Mails";
+        public string Adress { get; set; }
+
+        public PrintOutgoingMailAction(UserRepository userRepository, ReceiversMailsRepository receiversMailsRepository, MailRepository mailRepository, string adress)
+        {
+            _userRepository = userRepository;
+            _receiversMailsRepository = receiversMailsRepository;
+            _mailRepository = mailRepository;
+            Adress = adress;
+        }
+
+        public void Open()
+        {
+            var mails = _mailRepository.GetOutgoingMails(Adress);
+            var index = 1;
+            foreach (var mail in mails)
+            {                
+                foreach (var item in mail.Receivers)
+                {
+                    Console.WriteLine($"{index} - {mail.Title} - {item.Adress}");
+                    
+                }
+                index++;
+            }
+            Console.WriteLine("See detailed view of mail? <y>");
+            string seeDetailedView = Console.ReadLine();
+            if (!(seeDetailedView == "y")) 
+            {
+                Console.WriteLine("Exit");
+                return;
+            }
+            DetailedViev(mails);
+
+            //funkcionalnost brisanja maila
+        }
+
+        public void DetailedViev(List<MailTitleWithSenderAdress> mails)
         {
             Console.WriteLine("Mail serial number:");
             var isValidNumber = int.TryParse(Console.ReadLine(), out var mailNum);
@@ -26,14 +68,13 @@ namespace DmailApp.Presentation.Helpers
                 return;
             }
             int idOfChosenMail = mails[mailNum - 1].Id;
-            var mailToShow = mailRepository.ShowMailById(idOfChosenMail);
+            var mailToShow = _mailRepository.ShowMailById(idOfChosenMail);
             if (mailToShow == null)
             {
                 Console.WriteLine("Wrong id input");
                 return;
             }
-            mailToShow.WasRead = true;
-
+            
             if (mailToShow is TextMail)
             {
                 Console.WriteLine("textMail");
@@ -52,11 +93,10 @@ namespace DmailApp.Presentation.Helpers
                     joinedAdresses += item.Receiver.Adress + " ";
                 }
                 Console.WriteLine(joinedAdresses);
-                var idOfLoggedInUser = userRepository.GetIdByAdress(adress);
+                var idOfLoggedInUser = _userRepository.GetIdByAdress(Adress);
                 var status = _receiversMailsRepository.GetStatusByCompositeKey(idOfChosenMail, idOfLoggedInUser);
                 Console.WriteLine(status);
             }
-            mailRepository.Update(mailToShow, idOfChosenMail);
         }
     }
 }

@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Actions\OutgoingMailActions\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>

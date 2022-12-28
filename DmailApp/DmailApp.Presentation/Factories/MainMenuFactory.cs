@@ -16,8 +16,8 @@ namespace DmailApp.Presentation.Factories
             var actions = new List<IAction>
             {
                 IncomingMailActionsFactory.Create(adress),
-                //OutgoingMailActionsFactory.Create(adress),
-                //SpamMailActionsFactory.Create(),
+                OutgoingMailActionsFactory.Create(adress),
+                SpamActionsFactory.Create(adress),
                 //SendNewMailActionsFactory.Create(),
                 //SendNewEventActionsFactory.Create(),
                 //ProfileSettingsActionsFactory.Create(),
