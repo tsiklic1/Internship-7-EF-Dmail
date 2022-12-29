@@ -18,9 +18,8 @@ namespace DmailApp.Presentation.Factories
                 IncomingMailActionsFactory.Create(adress),
                 OutgoingMailActionsFactory.Create(adress),
                 SpamActionsFactory.Create(adress),
-                //SendNewMailActionsFactory.Create(),
-                //SendNewEventActionsFactory.Create(),
-                //ProfileSettingsActionsFactory.Create(),
+                SendNewMailActionsFactory.Create(adress),
+                ProfileSettingsActionsFactory.Create(adress),
                 //LogOutActionsFactory.Create()
                 new ExitMenuAction()
             };

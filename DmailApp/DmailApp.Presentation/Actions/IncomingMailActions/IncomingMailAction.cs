@@ -13,7 +13,5 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
         {
             Name = "Incoming mails menu";
         }
-
-
     }
 }

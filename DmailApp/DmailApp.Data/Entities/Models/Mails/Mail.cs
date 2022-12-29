@@ -25,9 +25,5 @@ namespace DmailApp.Data.Entities.Models.Mails
         //many to many with user (receiver)
         public ICollection<ReceiversMails> ReceiversMails { get; set; } = new List<ReceiversMails>();
 
-        public override string ToString()
-        {
-            return $"{Title}\n{DateTimeOfSending}\n{Sender}";
-        }
     }
 }

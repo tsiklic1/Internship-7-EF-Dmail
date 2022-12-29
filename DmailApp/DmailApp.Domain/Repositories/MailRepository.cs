@@ -214,7 +214,14 @@ namespace DmailApp.Domain.Repositories
                 })
                 .ToList();
             return titlesWithReceivers;
+        }
 
+        public int GetFirstFreeId()
+        {
+            var mailIds = DbContext.Mails
+                .Select(m => m.Id)
+                .ToList();
+            return mailIds.Max() + 1;
         }
 
         

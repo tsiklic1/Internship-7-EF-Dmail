@@ -89,6 +89,19 @@ namespace DmailApp.Domain.Repositories
             return id;            
         }
 
+        public bool CheckIfAdressExistsInDb(string adress)
+        {
+            var usersAdresses = DbContext.Users
+                .Select(u => u.Adress)
+                .ToList();
+
+            if (usersAdresses.Contains(adress))
+            {
+                return true;
+            }
+            return false;
+        }
+
         
 
     }

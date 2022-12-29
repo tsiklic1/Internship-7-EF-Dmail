@@ -49,6 +49,7 @@ namespace DmailApp.Presentation.Actions.SpamActions
             }
             //napravit da se dalje ponaša ko ulazna pošta
 
+
         }
     }
 }
