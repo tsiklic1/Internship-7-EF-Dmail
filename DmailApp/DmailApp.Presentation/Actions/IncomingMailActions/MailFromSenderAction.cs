@@ -34,8 +34,6 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
                 Console.WriteLine($"{index} - {mail.Title} - {mail.SenderAdress}");
                 index++;
             }
-
-
         }
     }
 }
