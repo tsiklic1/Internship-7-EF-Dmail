@@ -35,7 +35,7 @@ namespace DmailApp.Domain.Repositories
 
             return SaveChanges();
         }
-
+        
         public StautsEnum? GetStatusByCompositeKey(int mailId, int receiverId)
         {
             var receiverMail = DbContext.ReceiversMails
@@ -51,5 +51,26 @@ namespace DmailApp.Domain.Repositories
             var status = receiverEventMail.Status;
             return status;
         }
+
+        public List<int> GetAllReceiversIdsBySenderId(int senderId)
+        {
+            var receiversIds = DbContext.ReceiversMails
+                .Where(r => r.SentMail.SenderId == senderId)
+                .Select(r => r.ReceiverId)
+                .ToList();
+
+            return receiversIds;
+        }
+        
+        public List<int> GetAllSendersByReceiverId(int receiverId)
+        {
+            var senderIds = DbContext.ReceiversMails
+                .Where(r => r.ReceiverId == receiverId)
+                .Select(r => r.SentMail.SenderId)
+                .ToList();
+
+            return senderIds;
+        }
+
     }
 }

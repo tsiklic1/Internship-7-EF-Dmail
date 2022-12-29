@@ -2,6 +2,7 @@
 using DmailApp.Data.Entities.Models;
 using DmailApp.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,7 +103,14 @@ namespace DmailApp.Domain.Repositories
             return false;
         }
 
-        
+        //public void GetAllReceivers(string adress)
+        //{
+        //    var receivers = DbContext.Users
+        //        .Include(u => u.ReceiversMails)
+        //        .ThenInclude(r => r.Receiver)
+        //        .Where()
+        //        .ToList();
+        //}
 
     }
 }

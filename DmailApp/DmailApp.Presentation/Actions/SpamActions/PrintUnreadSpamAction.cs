@@ -31,8 +31,7 @@ namespace DmailApp.Presentation.Actions.SpamActions
         public void Open()
         {
             var listOfSpamUsers = _usersSpamsRepository.GetSpamAccounts(Adress);
-            //dobia si sve id-ove spam usera za logiranog usera
-            //sad triba isprintat sve mailove kojima je SenderId jednak ovin SpamId iz ove listOfSpamUsers
+
             var listOfSpamIds = new List<int>();
             foreach (var item in listOfSpamUsers)
             {
@@ -41,7 +40,7 @@ namespace DmailApp.Presentation.Actions.SpamActions
 
             var readSpamMails = _mailRepository.GetUnreadSpamMails(Adress, listOfSpamIds);
             var index = 1;
-            Console.WriteLine("Read spam mails: ");
+            Console.WriteLine("Not read spam mails: ");
             foreach (var mail in readSpamMails)
             {
                 Console.WriteLine($"{index} - {mail.Title} - {mail.SenderAdress}");

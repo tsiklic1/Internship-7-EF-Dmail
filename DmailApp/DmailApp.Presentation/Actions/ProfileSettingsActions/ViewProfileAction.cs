@@ -28,7 +28,44 @@ namespace DmailApp.Presentation.Actions.ProfileSettingsActions
 
         public void Open()
         {
-           
+            Console.WriteLine($"You sent mails to: ");
+
+            //funkcija koja dohvaća sve kojima je ovi brat sla
+
+            var loggedInId = _userRepository.GetIdByAdress(Adress);
+
+            var receiverIdsList = _receiversMailsRepository.GetAllReceiversIdsBySenderId(loggedInId);            
+
+            List<int> receiverIdsNoDuplicates = receiverIdsList.Distinct().ToList();
+
+            foreach (var receiverId in receiverIdsNoDuplicates)
+            {
+                Console.WriteLine(_userRepository.GetById(receiverId).Adress);
+            }
+
+            Console.WriteLine($"\nYou received mails from: ");
+
+            //funkcija koja dohvaća sve koji su njemu slali
+
+            var senderIdsList = _receiversMailsRepository.GetAllSendersByReceiverId(loggedInId);
+            List<int> senderIdsNoDuplicates = senderIdsList.Distinct().ToList();
+
+            foreach (var item in senderIdsNoDuplicates)
+            {
+                Console.WriteLine(_userRepository.GetById(item).Adress);
+            }
+
+            //dodat opciju da filtrira spam i li ne spam 
+
+            //dodat opciju da označi kao spam ili ne spam
+
+            Console.WriteLine("Filter <y>");
+            var filterChoice = Console.ReadLine();
+
+            if (filterChoice != "y")
+            {
+                return;
+            }
         }
     }
 }
