@@ -235,7 +235,7 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
                 else if (eventReply == "2")
                 {
                     replyContent = $"{Adress} declined your invitation";
-                    _receiversMailsRepository.UpdateStatus(mail.SenderId, mail.Id, StatusEnum.Declined);
+                    _receiversMailsRepository.UpdateStatus(_userRepository.GetIdByAdress(Adress), mail.Id, StatusEnum.Declined);
 
                 }
                 else {

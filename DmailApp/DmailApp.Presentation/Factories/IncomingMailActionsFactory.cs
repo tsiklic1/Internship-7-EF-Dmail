@@ -17,7 +17,7 @@ namespace DmailApp.Presentation.Factories
         {
             var actions = new List<IAction>
             {
-                new PrintReadMailAction(RepositoryFactory.Create<UserRepository>(), RepositoryFactory.Create<ReceiversMailsRepository>(), RepositoryFactory.Create<MailRepository>(), adress),
+                new PrintReadMailAction(RepositoryFactory.Create<UserRepository>(), RepositoryFactory.Create<ReceiversMailsRepository>(), RepositoryFactory.Create<MailRepository>(),RepositoryFactory.Create<UsersSpamsRepository>(), adress),
                 new PrintUnreadMailAction(RepositoryFactory.Create<UserRepository>(), RepositoryFactory.Create<ReceiversMailsRepository>(), RepositoryFactory.Create<MailRepository>(), RepositoryFactory.Create<UsersSpamsRepository>(), adress),
                 new MailFromSenderAction(RepositoryFactory.Create<MailRepository>(), adress),
                 new ExitMenuAction()
