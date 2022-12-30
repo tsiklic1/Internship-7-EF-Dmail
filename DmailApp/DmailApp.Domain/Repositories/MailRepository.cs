@@ -27,7 +27,9 @@ namespace DmailApp.Domain.Repositories
 
         public ResponseResultType Delete(int id)
         {
-            var mailToDelete = DbContext.Mails.Find(id);
+            var mailToDelete = DbContext.Mails
+                .Where(m => m.Id == id)
+                .FirstOrDefault();
             if (mailToDelete is null)
             {
                 return ResponseResultType.NotFound;

@@ -21,7 +21,6 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
         private readonly MailRepository _mailRepository;
         private readonly UsersSpamsRepository _usersSpamsRepository;
 
-
         public int MenuIndex { get; set; }
         public string Name { get; set; } = "Print Read Mails";
         public string Adress { get; set; }
@@ -133,7 +132,7 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
                     MarkAsSpam(_userRepository.GetIdByAdress(Adress), mailToShow.SenderId);
                     break;
                 case "3":
-                    //DeleteMail();
+                    DeleteMail(mailToShow);
                     break;
                 case "4":
                     Reply(mailToShow);
@@ -144,6 +143,11 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
                 default:
                     break;
             }
+        }
+
+        public void DeleteMail(Mail mailToDelete)
+        {
+            _mailRepository.Delete(mailToDelete.Id);
         }
 
         public void Filter(List<MailTitleWithSenderAdress> mails)

@@ -132,7 +132,7 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
                     MarkAsSpam(_userRepository.GetIdByAdress(Adress), mailToShow.SenderId);
                     break;
                 case "3":
-                    //DeleteMail();
+                    DeleteMail(mailToShow);
                     break;
                 case "4":
                     Reply(mailToShow);
@@ -145,6 +145,10 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
             }
         }
 
+        public void DeleteMail(Mail mailToDelete)
+        {
+            _mailRepository.Delete(mailToDelete.Id);
+        }
         public void Filter(List<MailTitleWithSenderAdress> mails)
         {
             Console.WriteLine("1. Text mails\n2. Event mails");

@@ -97,6 +97,18 @@ namespace DmailApp.Presentation.Actions.OutgoingMailActions
                 var status = _receiversMailsRepository.GetStatusByCompositeKey(idOfChosenMail, idOfLoggedInUser);
                 Console.WriteLine(status);
             }
+            Console.WriteLine("Delete this mail? <y>");
+            var deleteChoice = Console.ReadLine();
+            if (deleteChoice == "y") 
+            {
+                DeleteMail(mailToShow);
+            }
+
+        }
+
+        public void DeleteMail(Mail mailToDelete)
+        {
+            _mailRepository.Delete(mailToDelete.Id);
         }
     }
 }
