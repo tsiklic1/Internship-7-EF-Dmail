@@ -103,7 +103,7 @@ namespace DmailApp.Domain.Repositories
                 .Include(m => m.ReceiversMails)
                 .ThenInclude(rm => rm.Receiver)
                 .ThenInclude(r => r.UsersSpamsSpam)
-                .Where(m => m.WasRead && spamIds.Contains(m.SenderId))
+                .Where(m => !m.WasRead && spamIds.Contains(m.SenderId))
                 .Select(m => new MailTitleWithSenderAdress
                 {
                     Id = m.Id,

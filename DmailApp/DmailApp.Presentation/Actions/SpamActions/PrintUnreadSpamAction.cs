@@ -38,10 +38,10 @@ namespace DmailApp.Presentation.Actions.SpamActions
                 listOfSpamIds.Add(item.SpamId);
             }
 
-            var readSpamMails = _mailRepository.GetUnreadSpamMails(Adress, listOfSpamIds);
+            var unreadSpamMails = _mailRepository.GetUnreadSpamMails(Adress, listOfSpamIds);
             var index = 1;
             Console.WriteLine("Not read spam mails: ");
-            foreach (var mail in readSpamMails)
+            foreach (var mail in unreadSpamMails)
             {
                 Console.WriteLine($"{index} - {mail.Title} - {mail.SenderAdress}");
                 index++;

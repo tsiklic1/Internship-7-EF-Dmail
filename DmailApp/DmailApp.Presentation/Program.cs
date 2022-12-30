@@ -34,23 +34,38 @@ while (choice != (int)ChoiceEnum.Exit)
 
 void Login()
 {
-	Console.WriteLine("\nEmail adress:");
-	string adress = Console.ReadLine();
-	Console.WriteLine("\nPassword");
-	string password = Console.ReadLine();
+	string adress = "";
+	string password = "";
 	var userRepo = RepositoryFactory.Create<UserRepository>();
-	while (!userRepo.CheckIfAdressPasswordCombinationExists(adress, password))
-	{
-		Console.WriteLine("Incorrect adress-password combination");
-        Console.WriteLine("\nEmail adress:");
-        adress = Console.ReadLine();
-        Console.WriteLine("\nPassword");
-        password = Console.ReadLine();
+	var exit = "";
+	DateTime loginTime = new DateTime();
 
+	while (!userRepo.CheckIfAdressPasswordCombinationExists(adress, password) && exit != "y")
+	{
+
+		if ((DateTime.Now - loginTime).TotalSeconds > 30)
+		{
+            Console.WriteLine("\nEmail adress:");
+            adress = Console.ReadLine();
+            Console.WriteLine("\nPassword");
+            password = Console.ReadLine();
+			loginTime= DateTime.Now;
+            if (!userRepo.CheckIfAdressPasswordCombinationExists(adress, password))
+            {
+                Console.WriteLine("Incorrect adress-password combination");
+                Console.WriteLine("Exit? <y>");
+                exit = Console.ReadLine();
+				Console.WriteLine("30 second timeout");
+				Thread.Sleep(30000);
+            }
+        }
+        		        
     }
-	//ovde smo se dobro loginali i cila logika triba krenit od vamo
-	var mainMenuActions = MainMenuFactory.CreateActions(adress);
-	mainMenuActions.PrintActionsAndOpen();
+	if (exit != "y")
+	{
+        var mainMenuActions = MainMenuFactory.CreateActions(adress);
+        mainMenuActions.PrintActionsAndOpen();
+    }
 }
 
 void Register()
@@ -61,7 +76,28 @@ void Register()
     Console.WriteLine("\nEmail adress");
 	var adress = Console.ReadLine();
 
-    if (!userRepo.CheckIfAdressIsUnique(adress))
+	if (!adress.Contains("@"))
+	{
+		Console.WriteLine("Incorrect input (no <@>)");
+		return;
+	}
+	var adressSplit = adress.Split('@', 2);
+
+	if (!adressSplit[1].Contains("."))
+	{
+		Console.WriteLine("Incorrect input (no <.>)");
+		return;
+	}
+
+	var adressAfterAtSplit = adressSplit[1].ToString().Split(".",2);
+
+	if (adressSplit[0].Count() < 1 || adressAfterAtSplit[0].Count() < 2 || adressAfterAtSplit[1].Count() < 3)
+	{
+		Console.WriteLine("Incorrect input (Dmail adress format: [string min 1 char]@[string min 2 char].[string min 3 char])");
+		return;
+	}
+
+	if (!userRepo.CheckIfAdressIsUnique(adress))
     {
         Console.WriteLine("Email adress taken");
         return;
@@ -86,7 +122,11 @@ void Register()
 		return;
 	}
 
-		
+	//provjera unesenog stringa da ima dobar format
+
+
+
+	//happy case - dodat u bazu
 }
 
 string GenerateCaptcha()

@@ -66,7 +66,7 @@ namespace DmailApp.Presentation.Actions.SendMailActions
             {
                 if (_userRepository.CheckIfAdressExistsInDb(item))
                 {
-                    var newReceiverMail = new ReceiversMails
+                     var newReceiverMail = new ReceiversMails
                     {
                         MailId = mailToSend.Id,
                         ReceiverId = _userRepository.GetIdByAdress(item)
