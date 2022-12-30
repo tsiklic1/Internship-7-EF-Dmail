@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DmailApp.Data.Enums
 {
-    public enum StautsEnum
+    public enum StatusEnum
     {
         Accepted,
         Declined,

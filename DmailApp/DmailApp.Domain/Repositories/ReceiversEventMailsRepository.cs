@@ -36,6 +36,8 @@ namespace DmailApp.Domain.Repositories
             return SaveChanges();
         }
 
+        
+
         //public StautsEnum? GetStatusByCompositeKey(int mailId, int receiverId)
         //{
         //    var receiverMail = DbContext.ReceiversEventMails

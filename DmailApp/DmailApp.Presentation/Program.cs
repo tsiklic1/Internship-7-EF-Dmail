@@ -1,4 +1,5 @@
-﻿using DmailApp.Domain.Factories;
+﻿using DmailApp.Data.Entities.Models;
+using DmailApp.Domain.Factories;
 using DmailApp.Domain.Repositories;
 using DmailApp.Presentation.Enums;
 using DmailApp.Presentation.Extensions;
@@ -72,7 +73,6 @@ void Register()
 {
 	
     var userRepo = RepositoryFactory.Create<UserRepository>();
-
     Console.WriteLine("\nEmail adress");
 	var adress = Console.ReadLine();
 
@@ -121,12 +121,13 @@ void Register()
 		Console.WriteLine("Did not correctly repeat captcha");
 		return;
 	}
-
-	//provjera unesenog stringa da ima dobar format
-
-
-
 	//happy case - dodat u bazu
+	var newUser = new User(adress, password)
+	{
+		UserId = userRepo.GetFirstFreeId()
+	};
+	userRepo.Add(newUser);
+
 }
 
 string GenerateCaptcha()

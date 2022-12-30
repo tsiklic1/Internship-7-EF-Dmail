@@ -75,9 +75,7 @@ namespace DmailApp.Data.Seeds
                         Id = 5,
                         DateTimeOfSending = new DateTime(2022, 7, 11, 7, 0, 0, DateTimeKind.Utc),
                         SenderId = 4,
-
-                    },
-
+                    }
                 });
 
             builder.Entity<EventMail>()
@@ -176,38 +174,38 @@ namespace DmailApp.Data.Seeds
                     {
                         ReceiverId = 2,
                         MailId= 6,
-                        Status = StautsEnum.NoAnswer
+                        Status = StatusEnum.NoAnswer
                     },
                     new ReceiversEventMails()
                     {
                         ReceiverId = 5,
                         MailId= 7,
-                        Status = StautsEnum.NoAnswer
+                        Status = StatusEnum.NoAnswer
 
                     },
                     new ReceiversEventMails()
                     {
                         ReceiverId = 4,
                         MailId= 8,
-                        Status = StautsEnum.Accepted
+                        Status = StatusEnum.Accepted
                     },
                     new ReceiversEventMails()
                     {
                         ReceiverId = 1,
                         MailId= 9,
-                        Status = StautsEnum.Declined
+                        Status = StatusEnum.Declined
                     },
                     new ReceiversEventMails()
                     {
                         ReceiverId = 2,
                         MailId= 9,
-                        Status = StautsEnum.NoAnswer
+                        Status = StatusEnum.NoAnswer
                     },
                     new ReceiversEventMails()
                     {
                         ReceiverId = 5,
                         MailId= 9,
-                        Status = StautsEnum.NoAnswer
+                        Status = StatusEnum.NoAnswer
                     }
                 });
         

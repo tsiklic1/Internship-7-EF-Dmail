@@ -85,7 +85,7 @@ namespace DmailApp.Presentation.Actions.SendMailActions
                     {
                         MailId = mailToSend.Id,
                         ReceiverId = _userRepository.GetIdByAdress(item),
-                        Status = StautsEnum.NoAnswer
+                        Status = StatusEnum.NoAnswer
                     };
 
                     _receiversMailsRepository.Add(newReceiverMail);

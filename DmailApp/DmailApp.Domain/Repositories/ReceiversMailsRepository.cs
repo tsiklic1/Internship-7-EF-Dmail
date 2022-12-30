@@ -36,7 +36,7 @@ namespace DmailApp.Domain.Repositories
             return SaveChanges();
         }
         
-        public StautsEnum? GetStatusByCompositeKey(int mailId, int receiverId)
+        public StatusEnum? GetStatusByCompositeKey(int mailId, int receiverId)
         {
             var receiverMail = DbContext.ReceiversMails
                 .Where(x => x.MailId == mailId && x.ReceiverId == receiverId)
@@ -72,5 +72,26 @@ namespace DmailApp.Domain.Repositories
             return senderIds;
         }
 
+        public ResponseResultType UpdateStatus(int receiverId, int mailId, StatusEnum status)
+        {
+            var receiverMail = DbContext.ReceiversEventMails
+                .Where(m => m.MailId == mailId && m.ReceiverId == receiverId)
+                .FirstOrDefault();
+
+            if (receiverMail is null)
+            {
+                Console.WriteLine("receiverMailIsNull");
+                return ResponseResultType.NotFound;
+            }
+
+            receiverMail.Status = status;
+            return SaveChanges();
+        }
+
+        //public ReceiversMails GetByCompositeKey(int receiverId, int mailId)
+        //{
+        //    var receiverMail = DbContext.ReceiversMails.Find(receiverId, mailId);
+        //    return receiverMail;
+        //}
     }
 }

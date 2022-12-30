@@ -1,5 +1,6 @@
 ﻿using DmailApp.Data.Entities.Models;
 using DmailApp.Data.Entities.Models.Mails;
+using DmailApp.Data.Enums;
 using DmailApp.Domain.Models;
 using DmailApp.Domain.Repositories;
 using DmailApp.Presentation.Abstractions;
@@ -33,7 +34,7 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
             _mailRepository = mailRepository;
             _usersSpamsRepository = usersSpamsRepository;
             Adress = adress;
-        }   
+        }
 
         public void Open()
         {
@@ -56,7 +57,7 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
                 switch (choice)
                 {
                     case (int)IncomingMailActionEnum.DetailedView:
-                        DetailedViev(mails);                        
+                        DetailedViev(mails);
                         break;
                     case (int)IncomingMailActionEnum.Filter:
                         Filter(mails);
@@ -157,7 +158,7 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
                     if (mailToShow is TextMail)
                     {
                         Console.WriteLine($"{item.Title} - {item.SenderAdress}");
-                    }                    
+                    }
                 }
             }
             else if (choiceOfFilter == "2")
@@ -177,7 +178,7 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
                 Console.WriteLine("Incorrect input");
             }
 
-            
+
         }
         public void MarkAsNotRead(Mail mailToShow, int idOfChosenMail)
         {
@@ -188,6 +189,12 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
         public void MarkAsSpam(int userId, int spamId)
         {
             //dodat u usersspams par receiverId senderId
+            if (_usersSpamsRepository.CheckIfUserSpamPairExists(userId, spamId))
+            {
+                Console.WriteLine("already is spam");
+                return;
+            }
+
             var newUserSpam = new UsersSpams()
             {
                 UserId = userId,
@@ -198,39 +205,60 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
 
         public void Reply(Mail mail)
         {
+            var firstFreeId = _mailRepository.GetFirstFreeId();
+            var replyTitle = $"Reply to {mail.Title}";
+            var replyContent = "reply";
             if (mail is TextMail)
             {
-                var firstFreeId = _mailRepository.GetFirstFreeId();
-                var replyTitle = $"Reply to {mail.Title}";
                 Console.WriteLine("Content of reply:");
-                var replyContent = Console.ReadLine();
+                replyContent = Console.ReadLine();
                 if (replyContent == "")
                 {
                     Console.WriteLine("Content can't be empty");
                     return;
                 }
 
-                var replyMail = new TextMail(replyTitle, replyContent)
-                {
-                    Id = firstFreeId,
-                    DateTimeOfSending = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc),
-                    SenderId = _userRepository.GetIdByAdress(Adress)
-                };
-                _mailRepository.Add(replyMail);
-                var newReceiverMail = new ReceiversMails
-                {
-                    MailId = replyMail.Id,
-                    ReceiverId = mail.SenderId
-                };
             }
 
             else if (mail is EventMail)
             {
-                
-                
+                Console.WriteLine("1. Accept event\n2. Decline event");
+                var eventReply = Console.ReadLine();
+
+                if (eventReply == "1")
+                {
+                    replyContent = $"{Adress} accepted your invitation";
+                    //receiver mail pair - mail.SenderId, mail.Id
+                    _receiversMailsRepository.UpdateStatus(_userRepository.GetIdByAdress(Adress), mail.Id, StatusEnum.Accepted);
+                    Console.WriteLine(_receiversMailsRepository.GetStatusByCompositeKey(mail.Id, mail.SenderId));
+                }
+                else if (eventReply == "2")
+                {
+                    replyContent = $"{Adress} declined your invitation";
+                    _receiversMailsRepository.UpdateStatus(mail.SenderId, mail.Id, StatusEnum.Declined);
+
+                }
+                else {
+                    Console.WriteLine("Incorrect input");
+                }
             }
-            
+
+            var replyMail = new TextMail(replyTitle, replyContent)
+            {
+                Id = firstFreeId,
+                DateTimeOfSending = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc),
+                SenderId = _userRepository.GetIdByAdress(Adress)
+            };
+            _mailRepository.Add(replyMail);
+            var newReceiverMail = new ReceiversMails
+            {
+                MailId = replyMail.Id,
+                ReceiverId = mail.SenderId
+            };
+
+            _receiversMailsRepository.Add(newReceiverMail);            
         }
+    
 
         
     }

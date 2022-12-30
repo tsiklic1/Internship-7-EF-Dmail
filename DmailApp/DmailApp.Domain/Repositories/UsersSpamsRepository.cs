@@ -43,5 +43,17 @@ namespace DmailApp.Domain.Repositories
 
             return spamAccounts;
         }
+
+        public bool CheckIfUserSpamPairExists(int userId, int spamId)
+        {
+            var usersSpams = DbContext.UsersSpams
+                .Where(u => u.UserId == userId && u.SpamId == spamId)
+                .ToList();
+            if (usersSpams.Count()>0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -103,14 +103,13 @@ namespace DmailApp.Domain.Repositories
             return false;
         }
 
-        //public void GetAllReceivers(string adress)
-        //{
-        //    var receivers = DbContext.Users
-        //        .Include(u => u.ReceiversMails)
-        //        .ThenInclude(r => r.Receiver)
-        //        .Where()
-        //        .ToList();
-        //}
+        public int GetFirstFreeId()
+        {
+            var userIds = DbContext.Users
+                .Select(m => m.UserId)
+                .ToList();
+            return userIds.Max() + 1;
+        }
 
     }
 }
