@@ -1,4 +1,5 @@
-﻿using DmailApp.Domain.Repositories;
+﻿using DmailApp.Data.Entities.Models;
+using DmailApp.Domain.Repositories;
 using DmailApp.Presentation.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -82,9 +83,7 @@ namespace DmailApp.Presentation.Actions.ProfileSettingsActions
                 switch (choiceOfFilter)
                 {
                     case "1":  //možda čak ovo iz ovoga casea spremit vani pa da iman spremnu listu i onda iz nje mogu označavat kao spam tj provjeravat 
-                        Console.WriteLine("Spam accounts: ");
-                        
-
+                        Console.WriteLine("Spam accounts: ");                       
                         foreach (var item in listOfSpamIds)
                         {
                             Console.WriteLine(_userRepository.GetById(item).Adress);
@@ -106,34 +105,40 @@ namespace DmailApp.Presentation.Actions.ProfileSettingsActions
                 }
             }
 
-            Console.WriteLine("Acces mail <y>");
+            Console.WriteLine("Acces user <y>");
             var accesMailChoice = Console.ReadLine();
             if (accesMailChoice == "y")
             {
-                Console.WriteLine("Choose mail number: ");
-                var isValidInput = int.TryParse(Console.ReadLine(), out var mailNumber);
-                if (!isValidInput || mailNumber<1 || mailNumber > allIds.Count())
+                Console.WriteLine("Choose user adress number: ");
+                var isValidInput = int.TryParse(Console.ReadLine(), out var adressNumber);
+                if (!isValidInput || adressNumber<1 || adressNumber > allIds.Count())
                 {
                     Console.WriteLine("Incorrect input");
                     return;
                 }
-                var idOfMail = allIds[mailNumber - 1];
-                if (listOfSpamIds.Contains(idOfMail))
+                var idOfAdress = allIds[adressNumber - 1]; 
+                if (listOfSpamIds.Contains(idOfAdress))
                 {
                     Console.WriteLine("This user is spam. Mark as not spam? <y>");
                     var markAsNotSpam = Console.ReadLine();
                     if (markAsNotSpam == "y")
                     {
-                        //izbrisat iz baze user spam par
+                        _usersSpamsRepository.Delete(_userRepository.GetIdByAdress(Adress), idOfAdress);
                     }
                 }
-                else if (listOfNotSpamIds.Contains(idOfMail))
+                else if (listOfNotSpamIds.Contains(idOfAdress))
                 {
                     Console.WriteLine("This user is not spam. Mark as spam? <y>");
                     var markAsSpam = Console.ReadLine();
                     if (markAsSpam == "y")
                     {
-                        //dodat u bazu novi user spam par
+                        var userSpam = new UsersSpams()
+                        {
+                            UserId = _userRepository.GetIdByAdress(Adress),
+                            SpamId = idOfAdress  
+                        };
+
+                        _usersSpamsRepository.Add(userSpam);
                     }
                 }
             }

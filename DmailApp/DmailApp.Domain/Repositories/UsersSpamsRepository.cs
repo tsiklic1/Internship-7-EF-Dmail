@@ -22,9 +22,11 @@ namespace DmailApp.Domain.Repositories
             return SaveChanges();
         }
 
-        public ResponseResultType Delete(int id)
+        public ResponseResultType Delete(int userId, int spamId)
         {
-            var userSpamToDelete = DbContext.UsersSpams.Find(id);
+            var userSpamToDelete = DbContext.UsersSpams
+                .Where(u => u.UserId == userId && u.SpamId == spamId)
+                .FirstOrDefault();
             if (userSpamToDelete is null)
             {
                 return ResponseResultType.NotFound;
