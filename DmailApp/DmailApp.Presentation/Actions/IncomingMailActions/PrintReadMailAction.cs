@@ -44,6 +44,13 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
                 Console.WriteLine($"{index} - {mail.Title} - {mail.SenderAdress}");
                 index++;
             }
+
+            if (mails.Count() == 0)
+            {
+                Console.WriteLine("No read incoming mail");
+                return;
+            }
+
             var choice = -1;
             while (choice != (int)IncomingMailActionEnum.Exit)
             {

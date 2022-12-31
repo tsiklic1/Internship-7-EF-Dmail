@@ -35,11 +35,8 @@ namespace DmailApp.Presentation.Actions.SpamActions
 
         public void Open()
         {
-            //za usera dobavit sve spam usere u listu
-            //onda sa ton lison gledat mailove koje su ti ljudi slali
             var listOfSpamUsers = _usersSpamsRepository.GetSpamAccounts(Adress);
-            //dobia si sve id-ove spam usera za logiranog usera
-            //sad triba isprintat sve mailove kojima je SenderId jednak ovin SpamId iz ove listOfSpamUsers
+
             var listOfSpamIds = new List<int>();
             foreach (var item in listOfSpamUsers)
             {
@@ -54,7 +51,14 @@ namespace DmailApp.Presentation.Actions.SpamActions
                 Console.WriteLine($"{index} - {mail.Title} - {mail.SenderAdress}");
                 index++;
             }
-            //napravit da se dalje ponaša ko ulazna pošta
+
+
+            if (mails.Count() == 0)
+            {
+                Console.WriteLine("No read spam mail");
+                return;
+            }
+
             var choice = -1;
             while (choice != (int)IncomingMailActionEnum.Exit)
             {
@@ -130,7 +134,7 @@ namespace DmailApp.Presentation.Actions.SpamActions
 
             //sad se ovdi triba otvorit izbornik za 4 akcije
             var detailedViewChoice = "";
-            Console.WriteLine($"1. Mark as NotRead\n2. Mark as spam\n3. Delete mail\n4. Reply\n5. Exit");
+            Console.WriteLine($"1. Mark as NotRead\n2. Delete mail\n3. Reply\n4. Exit");
             detailedViewChoice = Console.ReadLine();
             switch (detailedViewChoice)
             {
@@ -138,15 +142,11 @@ namespace DmailApp.Presentation.Actions.SpamActions
                     MarkAsNotRead(mailToShow, idOfChosenMail);
                     break;
                 case "2":
-                    MarkAsSpam(_userRepository.GetIdByAdress(Adress), mailToShow.SenderId);
-                    break;
+                    DeleteMail(mailToShow); break;
                 case "3":
-                    DeleteMail(mailToShow);
-                    break;
-                case "4":
                     Reply(mailToShow);
                     break;
-                case "5":
+                case "4":
                     Console.WriteLine("Exit");
                     break;
                 default:

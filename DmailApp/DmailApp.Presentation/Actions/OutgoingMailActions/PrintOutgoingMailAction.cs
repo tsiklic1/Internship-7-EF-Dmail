@@ -41,6 +41,13 @@ namespace DmailApp.Presentation.Actions.OutgoingMailActions
                 }
                 index++;
             }
+
+            if (mails.Count() == 0)
+            {
+                Console.WriteLine("No outgoing mail");
+                return;
+            }
+
             Console.WriteLine("See detailed view of mail? <y>");
             string seeDetailedView = Console.ReadLine();
             if (!(seeDetailedView == "y")) 

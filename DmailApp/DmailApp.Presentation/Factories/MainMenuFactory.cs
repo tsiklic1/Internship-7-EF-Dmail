@@ -21,7 +21,8 @@ namespace DmailApp.Presentation.Factories
                 SendNewMailActionsFactory.Create(adress),
                 ProfileSettingsActionsFactory.Create(adress),
                 //LogOutActionsFactory.Create()
-                new ExitMenuAction()
+                //new ExitMenuAction()
+                new LogOutAction("Log out")
             };
 
             actions.SetActionIndexes();

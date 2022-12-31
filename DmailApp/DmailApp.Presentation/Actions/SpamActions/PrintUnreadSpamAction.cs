@@ -52,7 +52,13 @@ namespace DmailApp.Presentation.Actions.SpamActions
                 Console.WriteLine($"{index} - {mail.Title} - {mail.SenderAdress}");
                 index++;
             }
-            //napravit da se dalje ponaša ko ulazna pošta
+
+            if (mails.Count() == 0)
+            {
+                Console.WriteLine("No unread spam mail");
+                return;
+            }
+
             var choice = -1;
             while (choice != (int)IncomingMailActionEnum.Exit)
             {
@@ -128,7 +134,7 @@ namespace DmailApp.Presentation.Actions.SpamActions
 
             //sad se ovdi triba otvorit izbornik za 4 akcije
             var detailedViewChoice = "";
-            Console.WriteLine($"1. Mark as NotRead\n2. Mark as spam\n3. Delete mail\n4. Reply\n5. Exit");
+            Console.WriteLine($"1. Mark as NotRead\n2. Delete mail\n3. Reply\n4. Exit");
             detailedViewChoice = Console.ReadLine();
             switch (detailedViewChoice)
             {
@@ -136,15 +142,11 @@ namespace DmailApp.Presentation.Actions.SpamActions
                     MarkAsNotRead(mailToShow, idOfChosenMail);
                     break;
                 case "2":
-                    MarkAsSpam(_userRepository.GetIdByAdress(Adress), mailToShow.SenderId);
-                    break;
+                    DeleteMail(mailToShow); break;
                 case "3":
-                    DeleteMail(mailToShow);
-                    break;
-                case "4":
                     Reply(mailToShow);
                     break;
-                case "5":
+                case "4":
                     Console.WriteLine("Exit");
                     break;
                 default:

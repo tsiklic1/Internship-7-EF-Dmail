@@ -17,6 +17,7 @@ namespace DmailApp.Presentation.Extensions
 
 
             var isExitSelected = false;
+            var isLogOutSelected = false;
             do
             {
                 PrintActions(actions);
@@ -38,7 +39,8 @@ namespace DmailApp.Presentation.Extensions
                 action.Open();
 
                 isExitSelected = action is ExitMenuAction;
-            } while (!isExitSelected);
+                isLogOutSelected= action is LogOutAction;
+            } while (!isExitSelected && !isLogOutSelected);
         }
 
         public static void SetActionIndexes(this IList<IAction> actions)
