@@ -92,7 +92,7 @@ namespace DmailApp.Presentation.Actions.SpamActions
             }
             if (mailNum > mails.Count() || mailNum < 1)
             {
-                Console.WriteLine("No mail with that id");
+                Console.WriteLine("No mail with that ordinal number");
                 return;
             }
             int idOfChosenMail = mails[mailNum - 1].Id;
