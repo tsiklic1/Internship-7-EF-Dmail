@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DmailApp.Data.Migrations
 {
     [DbContext(typeof(DmailAppDbContext))]
-    [Migration("20221228105410_InitialMigration")]
+    [Migration("20221231102717_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

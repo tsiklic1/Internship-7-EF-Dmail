@@ -113,9 +113,17 @@ namespace DmailApp.Presentation.Actions.OutgoingMailActions
 
         }
 
-        public void DeleteMail(Mail mailToDelete)
+        public bool DeleteMail(Mail mailToDelete)
         {
+            Console.WriteLine("Confirm? <y>");
+            if (Console.ReadLine() != "y")
+            {
+                Console.WriteLine("Exit");
+                return false;
+            }
+            Console.WriteLine("Deleted");
             _mailRepository.Delete(mailToDelete.Id);
+            return true;
         }
     }
 }
