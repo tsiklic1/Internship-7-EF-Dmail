@@ -206,13 +206,24 @@ namespace DmailApp.Presentation.Abstractions
         }
         public virtual void MarkAsNotRead(Mail mailToShow, int idOfChosenMail)
         {
+            Console.WriteLine("Confirm? <y>");
+            if (Console.ReadLine() != "y")
+            {
+                Console.WriteLine("Exit");
+                return;
+            }
             mailToShow.WasRead = false;
             _mailRepository.Update(mailToShow, idOfChosenMail);
         }
 
         public virtual void MarkAsSpam(int userId, int spamId)
         {
-            //dodat u usersspams par receiverId senderId
+            Console.WriteLine("Confirm? <y>");
+            if (Console.ReadLine() != "y")
+            {
+                Console.WriteLine("Exit");
+                return;
+            }
             if (_usersSpamsRepository.CheckIfUserSpamPairExists(userId, spamId))
             {
                 Console.WriteLine("already is spam");
