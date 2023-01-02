@@ -9,6 +9,6 @@ namespace DmailApp.Data.Entities.Models
 {
     public class ReceiversEventMails : ReceiversMails
     {
-        public StatusEnum Status { get; set; }
+        public StatusEnum Status { get; set; } = StatusEnum.NoAnswer;
     }
 }

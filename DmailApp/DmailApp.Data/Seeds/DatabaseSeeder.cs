@@ -75,7 +75,38 @@ namespace DmailApp.Data.Seeds
                         Id = 5,
                         DateTimeOfSending = new DateTime(2022, 7, 11, 7, 0, 0, DateTimeKind.Utc),
                         SenderId = 4,
-                    }
+                    },
+                    new TextMail("Račun", "Račun od banke")
+                    {
+                        Id = 10,
+                        DateTimeOfSending = new DateTime(2022, 1, 3, 7, 0, 0, DateTimeKind.Utc),
+                        SenderId = 3,
+                    },
+                    new TextMail("Slike s putovanja", "Slika1, Slika2, Slika3")
+                    {
+                        Id = 11,
+                        DateTimeOfSending = new DateTime(2022, 2, 7, 7, 0, 0, DateTimeKind.Utc),
+                        SenderId = 5,
+                    },
+                    new TextMail("Podsjetnik", "Pripremi se za ispit")
+                    {
+                        Id = 12,
+                        DateTimeOfSending = new DateTime(2022, 3, 11, 7, 0, 0, DateTimeKind.Utc),
+                        SenderId = 5,
+                    },
+                    new TextMail("Spotify-most lisened", "Michael Jackson, The Weekend, ...")
+                    {
+                        Id = 13,
+                        DateTimeOfSending = new DateTime(2022, 4, 12, 7, 0, 0, DateTimeKind.Utc),
+                        SenderId = 2,
+                    },
+                    new TextMail("Kazna", "Dobili ste kaznu za prekoračenje brzine...")
+                    {
+                        Id = 14,
+                        DateTimeOfSending = new DateTime(2022, 6, 11, 7, 0, 0, DateTimeKind.Utc),
+                        SenderId = 5,
+                    },
+
                 });
 
             builder.Entity<EventMail>()
@@ -110,6 +141,27 @@ namespace DmailApp.Data.Seeds
                         SenderId = 4,
                         EventTime = new DateTime(2023, 7, 2, 16, 0, 0, DateTimeKind.Utc)
                     },
+                    new EventMail("Kava")
+                    {
+                        Id = 15,
+                        DateTimeOfSending = new DateTime(2022, 12, 12, 20, 0, 0, DateTimeKind.Utc),
+                        SenderId = 3,
+                        EventTime = new DateTime(2023, 11, 2, 16, 0, 0, DateTimeKind.Utc)
+                    },
+                    new EventMail("Večera kod kuma")
+                    {
+                        Id = 16,
+                        DateTimeOfSending = new DateTime(2022, 11, 11, 20, 0, 0, DateTimeKind.Utc),
+                        SenderId = 3,
+                        EventTime = new DateTime(2023, 6, 2, 16, 0, 0, DateTimeKind.Utc)
+                    },
+                    new EventMail("Proslava")
+                    {
+                        Id = 17,
+                        DateTimeOfSending = new DateTime(2022, 8, 11, 20, 0, 0, DateTimeKind.Utc),
+                        SenderId = 5,
+                        EventTime = new DateTime(2023, 7, 4, 16, 0, 0, DateTimeKind.Utc)
+                    },
 
                 });
 
@@ -130,6 +182,11 @@ namespace DmailApp.Data.Seeds
                     {
                         UserId = 2,
                         SpamId = 3
+                    },
+                    new UsersSpams()
+                    {
+                        UserId = 5,
+                        SpamId = 4
                     }
                 });
 
@@ -165,7 +222,33 @@ namespace DmailApp.Data.Seeds
                     {
                         ReceiverId = 3,
                         MailId= 5
-                    }
+                    },
+                    new ReceiversMails()
+                    {
+                        ReceiverId = 2,
+                        MailId= 10
+                    },
+                    new ReceiversMails()
+                    {
+                        ReceiverId = 3,
+                        MailId= 11
+                    },
+                    new ReceiversMails()
+                    {
+                        ReceiverId = 4,
+                        MailId= 12
+                    },
+                    new ReceiversMails()
+                    {
+                        ReceiverId = 5,
+                        MailId= 13
+                    },
+                    new ReceiversMails()
+                    {
+                        ReceiverId = 1,
+                        MailId= 14
+                    },
+                    
                 });
             builder.Entity<ReceiversEventMails>()
                 .HasData(new List<ReceiversEventMails>
@@ -206,7 +289,32 @@ namespace DmailApp.Data.Seeds
                         ReceiverId = 5,
                         MailId= 9,
                         Status = StatusEnum.NoAnswer
-                    }
+                    },
+                    new ReceiversEventMails()
+                    {
+                        ReceiverId = 2,
+                        MailId= 15,
+                    },
+                    new ReceiversEventMails()
+                    {
+                        ReceiverId = 3,
+                        MailId= 16,
+                    },
+                    new ReceiversEventMails()
+                    {
+                        ReceiverId = 4,
+                        MailId= 17,
+                    },
+                    new ReceiversEventMails()
+                    {
+                        ReceiverId = 5,
+                        MailId= 17,
+                    },
+                    new ReceiversEventMails()
+                    {
+                        ReceiverId = 1,
+                        MailId= 17
+                    },
                 });
         
         }
