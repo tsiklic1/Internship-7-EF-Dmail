@@ -129,7 +129,7 @@ namespace DmailApp.Data.Migrations
                 {
                     { 1, "Dobar dan.", new DateTime(2022, 7, 11, 7, 0, 0, 0, DateTimeKind.Utc), 1, "Pozdrav", false, "textmail" },
                     { 2, "Poštovani, šaljem vam izvještaj.", new DateTime(2022, 8, 5, 9, 0, 0, 0, DateTimeKind.Utc), 2, "Izvještaj", false, "textmail" },
-                    { 3, "U dokumentu se nalazi slika zgrade fakulteta", new DateTime(2022, 7, 11, 7, 0, 0, 0, DateTimeKind.Utc), 3, "Sika", false, "textmail" },
+                    { 3, "U dokumentu se nalazi slika zgrade fakulteta", new DateTime(2022, 7, 11, 7, 0, 0, 0, DateTimeKind.Utc), 3, "Slika", false, "textmail" },
                     { 4, "Hej, pogledaj ovaj video.", new DateTime(2022, 7, 11, 7, 0, 0, 0, DateTimeKind.Utc), 4, "YouTube video", false, "textmail" },
                     { 5, "Kalendar: Siječanj, veljača, ožujak, travanj, ...", new DateTime(2022, 7, 11, 7, 0, 0, 0, DateTimeKind.Utc), 4, "Kalendar", false, "textmail" }
                 });

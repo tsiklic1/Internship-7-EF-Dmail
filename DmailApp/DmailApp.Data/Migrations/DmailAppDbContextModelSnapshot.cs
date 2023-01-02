@@ -276,7 +276,7 @@ namespace DmailApp.Data.Migrations
                             Id = 3,
                             DateTimeOfSending = new DateTime(2022, 7, 11, 7, 0, 0, 0, DateTimeKind.Utc),
                             SenderId = 3,
-                            Title = "Sika",
+                            Title = "Slika",
                             WasRead = false,
                             Content = "U dokumentu se nalazi slika zgrade fakulteta"
                         },

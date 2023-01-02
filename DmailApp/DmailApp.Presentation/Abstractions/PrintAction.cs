@@ -95,7 +95,7 @@ namespace DmailApp.Presentation.Abstractions
             var mailToShow = _mailRepository.ShowMailById(idOfChosenMail);
             if (mailToShow == null)
             {
-                Console.WriteLine("Wrong input");
+                Console.WriteLine("Wrong input (can't access mail that was deleted)");
                 return;
             }
             Console.WriteLine("Confirm? <y>");

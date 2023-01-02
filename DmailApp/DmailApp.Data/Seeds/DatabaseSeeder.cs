@@ -56,7 +56,7 @@ namespace DmailApp.Data.Seeds
                         SenderId = 2,
 
                     },
-                    new TextMail("Sika", "U dokumentu se nalazi slika zgrade fakulteta")
+                    new TextMail("Slika", "U dokumentu se nalazi slika zgrade fakulteta")
                     {
                         Id = 3,
                         DateTimeOfSending = new DateTime(2022, 7, 11, 7, 0, 0, DateTimeKind.Utc),

@@ -23,7 +23,20 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
 
         public override void Open()
         {
-            var mails = _mailRepository.GetReadMails(Adress);
+            var listOfSpamUsers = _usersSpamsRepository.GetSpamAccounts(Adress);
+
+            var listOfSpamIds = new List<int>();
+            foreach (var item in listOfSpamUsers)
+            {
+                listOfSpamIds.Add(item.SpamId);
+            }
+
+            var mails = _mailRepository.GetReadMails(Adress, listOfSpamIds);
+
+
+
+
+            //var mails = _mailRepository.GetReadMails(Adress);
             var index = 1;
             foreach (var mail in mails)
             {

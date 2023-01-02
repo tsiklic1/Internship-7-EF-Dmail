@@ -55,26 +55,48 @@ namespace DmailApp.Domain.Repositories
             return SaveChanges();
         }
 
-        public List<MailTitleWithSenderAdress> GetReadMails(string adress)
+        //public List<MailTitleWithSenderAdress> GetReadMails(string adress)
+        //{
+        //    var titlesWithSenders = DbContext.Mails
+        //        .Include(r => r.ReceiversMails)
+        //        .ThenInclude(u => u.Receiver)
+        //        .Where(r => r.WasRead)
+        //        .OrderBy(r => r.DateTimeOfSending)
+        //        .Select(r => new MailTitleWithSenderAdress
+        //        {
+        //            Id = r.Id,
+        //            Title= r.Title,
+        //            SenderAdress = r.Sender.Adress,
+        //            Receivers = r.ReceiversMails
+        //                    .Select(u => u.Receiver)
+        //                    .ToList()
+        //        })
+        //        .Where(r => r.Receivers.Any(g => g.Adress == adress))
+        //        .ToList();
+
+        //    return titlesWithSenders;
+        //}
+
+        public List<MailTitleWithSenderAdress> GetReadMails(string adress, List<int> spamIds)
         {
-            var titlesWithSenders = DbContext.Mails
-                .Include(r => r.ReceiversMails)
-                .ThenInclude(u => u.Receiver)
-                .Where(r => r.WasRead)
-                .OrderBy(r => r.DateTimeOfSending)
-                .Select(r => new MailTitleWithSenderAdress
+            var mails = DbContext.Mails
+                .Include(m => m.ReceiversMails)
+                .ThenInclude(rm => rm.Receiver)
+                .ThenInclude(r => r.UsersSpamsSpam)
+                .Where(m => m.WasRead && !spamIds.Contains(m.SenderId))
+                .Select(m => new MailTitleWithSenderAdress
                 {
-                    Id = r.Id,
-                    Title= r.Title,
-                    SenderAdress = r.Sender.Adress,
-                    Receivers = r.ReceiversMails
+                    Id = m.Id,
+                    Title = m.Title,
+                    SenderAdress = m.Sender.Adress,
+                    Receivers = m.ReceiversMails
                             .Select(u => u.Receiver)
                             .ToList()
+
                 })
                 .Where(r => r.Receivers.Any(g => g.Adress == adress))
                 .ToList();
-
-            return titlesWithSenders;
+            return mails;
         }
 
         public List<MailTitleWithSenderAdress> GetReadSpamMails(string adress, List<int> spamIds)
@@ -121,27 +143,49 @@ namespace DmailApp.Domain.Repositories
             return mails;
         }
 
-        public List<MailTitleWithSenderAdress> GetUnreadMails(string adress)
+        public List<MailTitleWithSenderAdress> GetUnreadMails(string adress, List<int> spamIds)
         {
-            var titlesWithSenders = DbContext.Mails
-                .Include(r => r.ReceiversMails)
-                .ThenInclude(u => u.Receiver)
-                .Where(r => r.WasRead == false)
-                .OrderBy(r => r.DateTimeOfSending)
-                .Select(r => new MailTitleWithSenderAdress
+            var mails = DbContext.Mails
+                .Include(m => m.ReceiversMails)
+                .ThenInclude(rm => rm.Receiver)
+                .ThenInclude(r => r.UsersSpamsSpam)
+                .Where(m => !m.WasRead && !spamIds.Contains(m.SenderId))
+                .Select(m => new MailTitleWithSenderAdress
                 {
-                    Id = r.Id,
-                    Title = r.Title,
-                    SenderAdress = r.Sender.Adress,
-                    Receivers = r.ReceiversMails
+                    Id = m.Id,
+                    Title = m.Title,
+                    SenderAdress = m.Sender.Adress,
+                    Receivers = m.ReceiversMails
                             .Select(u => u.Receiver)
                             .ToList()
+
                 })
                 .Where(r => r.Receivers.Any(g => g.Adress == adress))
                 .ToList();
-
-            return titlesWithSenders;
+            return mails;
         }
+
+        //public List<MailTitleWithSenderAdress> GetUnreadMails(string adress)
+        //{
+        //    var titlesWithSenders = DbContext.Mails
+        //        .Include(r => r.ReceiversMails)
+        //        .ThenInclude(u => u.Receiver)
+        //        .Where(r => r.WasRead == false)
+        //        .OrderBy(r => r.DateTimeOfSending)
+        //        .Select(r => new MailTitleWithSenderAdress
+        //        {
+        //            Id = r.Id,
+        //            Title = r.Title,
+        //            SenderAdress = r.Sender.Adress,
+        //            Receivers = r.ReceiversMails
+        //                    .Select(u => u.Receiver)
+        //                    .ToList()
+        //        })
+        //        .Where(r => r.Receivers.Any(g => g.Adress == adress))
+        //        .ToList();
+
+        //    return titlesWithSenders;
+        //}
 
         public List<MailTitleWithSenderAdress> SearchMailsByString(string adress, string text)
         {
