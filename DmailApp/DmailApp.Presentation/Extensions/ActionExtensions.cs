@@ -1,10 +1,5 @@
 ﻿using DmailApp.Presentation.Abstractions;
 using DmailApp.Presentation.Actions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DmailApp.Presentation.Extensions
 {

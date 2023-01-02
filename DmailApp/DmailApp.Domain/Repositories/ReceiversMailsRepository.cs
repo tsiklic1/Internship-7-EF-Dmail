@@ -2,11 +2,6 @@
 using DmailApp.Data.Entities.Models;
 using DmailApp.Data.Enums;
 using DmailApp.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DmailApp.Domain.Repositories
 {
@@ -88,10 +83,5 @@ namespace DmailApp.Domain.Repositories
             return SaveChanges();
         }
 
-        //public ReceiversMails GetByCompositeKey(int receiverId, int mailId)
-        //{
-        //    var receiverMail = DbContext.ReceiversMails.Find(receiverId, mailId);
-        //    return receiverMail;
-        //}
     }
 }

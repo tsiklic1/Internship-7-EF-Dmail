@@ -3,12 +3,6 @@ using DmailApp.Data.Entities.Models;
 using DmailApp.Data.Enums;
 using DmailApp.Domain.Models;
 using DmailApp.Domain.Repositories;
-using DmailApp.Presentation.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DmailApp.Presentation.Abstractions
 {
@@ -33,48 +27,7 @@ namespace DmailApp.Presentation.Abstractions
         }
 
         public virtual void Open()
-        {
-            //var mails = _mailRepository.GetReadMails(Adress);
-            //var index = 1;
-            //foreach (var mail in mails)
-            //{
-            //    Console.WriteLine($"{index} - {mail.Title} - {mail.SenderAdress}");
-            //    index++;
-            //}
-
-            //if (mails.Count() == 0)
-            //{
-            //    Console.WriteLine("No read incoming mail");
-            //    return;
-            //}
-
-            //var choice = -1;
-            //while (choice != (int)IncomingMailActionEnum.Exit)
-            //{
-            //    Console.WriteLine($"{(int)IncomingMailActionEnum.DetailedView}. Detailed view\n{(int)IncomingMailActionEnum.Filter}. Filter\n{(int)IncomingMailActionEnum.Exit}. Exit");
-            //    var isValidInput = int.TryParse(Console.ReadLine(), out choice);
-            //    if (!isValidInput)
-            //    {
-            //        continue;
-            //    }
-            //    switch (choice)
-            //    {
-            //        case (int)IncomingMailActionEnum.DetailedView:
-            //            DetailedViev(mails);
-            //            break;
-            //        case (int)IncomingMailActionEnum.Filter:
-            //            Filter(mails);
-            //            break;
-            //        case (int)IncomingMailActionEnum.Exit:
-            //            Console.WriteLine("Exit");
-            //            break;
-            //        default:
-            //            Console.WriteLine("Please select valid option");
-            //            break;
-            //    }
-            //}
-
-        }
+        {}
 
         public virtual void DetailedViev(List<MailTitleWithSenderAdress> mails)
         {
@@ -263,7 +216,6 @@ namespace DmailApp.Presentation.Abstractions
                 if (eventReply == "1")
                 {
                     replyContent = $"{Adress} accepted your invitation";
-                    //receiver mail pair - mail.SenderId, mail.Id
                     _receiversMailsRepository.UpdateStatus(_userRepository.GetIdByAdress(Adress), mail.Id, StatusEnum.Accepted);
                     Console.WriteLine(_receiversMailsRepository.GetStatusByCompositeKey(mail.Id, mail.SenderId));
                 }

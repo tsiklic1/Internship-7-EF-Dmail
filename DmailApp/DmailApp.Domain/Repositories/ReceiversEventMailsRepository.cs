@@ -1,12 +1,6 @@
 ﻿using DmailApp.Data.Entities.Models;
-using DmailApp.Data.Enums;
 using DmailApp.Data;
 using DmailApp.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DmailApp.Domain.Repositories
 {
@@ -35,23 +29,5 @@ namespace DmailApp.Domain.Repositories
 
             return SaveChanges();
         }
-
-        
-
-        //public StautsEnum? GetStatusByCompositeKey(int mailId, int receiverId)
-        //{
-        //    var receiverMail = DbContext.ReceiversEventMails
-        //        .Where(x => x.MailId == mailId && x.ReceiverId == receiverId)
-        //        .FirstOrDefault();
-
-        //    if (!(receiverMail is ReceiversEventMails))
-        //    {
-        //        return null;
-        //    }
-
-        //    var receiverEventMail = (ReceiversEventMails)receiverMail;
-        //    var status = receiverEventMail.Status;
-        //    return status;
-        //}
     }
 }

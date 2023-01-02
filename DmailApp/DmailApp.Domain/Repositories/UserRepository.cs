@@ -1,14 +1,6 @@
 ﻿using DmailApp.Data;
 using DmailApp.Data.Entities.Models;
 using DmailApp.Domain.Enums;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace DmailApp.Domain.Repositories
 {

@@ -1,16 +1,6 @@
-﻿using DmailApp.Data.Entities.Models.Mails;
-using DmailApp.Data.Entities.Models;
-using DmailApp.Data.Enums;
-using DmailApp.Domain.Models;
-using DmailApp.Domain.Repositories;
+﻿using DmailApp.Domain.Repositories;
 using DmailApp.Presentation.Abstractions;
 using DmailApp.Presentation.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace DmailApp.Presentation.Actions.IncomingMailActions
 {
@@ -32,11 +22,6 @@ namespace DmailApp.Presentation.Actions.IncomingMailActions
             }
 
             var mails = _mailRepository.GetReadMails(Adress, listOfSpamIds);
-
-
-
-
-            //var mails = _mailRepository.GetReadMails(Adress);
             var index = 1;
             foreach (var mail in mails)
             {

@@ -121,13 +121,11 @@ void Register()
 		Console.WriteLine("Did not correctly repeat captcha");
 		return;
 	}
-	//happy case - dodat u bazu
 	var newUser = new User(adress, password)
 	{
 		UserId = userRepo.GetFirstFreeId()
 	};
 	userRepo.Add(newUser);
-
 }
 
 string GenerateCaptcha()

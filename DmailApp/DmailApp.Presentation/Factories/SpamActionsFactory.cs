@@ -1,14 +1,8 @@
 ﻿using DmailApp.Domain.Factories;
 using DmailApp.Domain.Repositories;
 using DmailApp.Presentation.Abstractions;
-using DmailApp.Presentation.Actions.OutgoingMailActions;
 using DmailApp.Presentation.Actions;
 using DmailApp.Presentation.Actions.SpamActions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DmailApp.Presentation.Factories
 {
